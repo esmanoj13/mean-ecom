@@ -1,0 +1,96 @@
+// Define variables for consistent styling
+$primary-color: #3498db;
+$secondary-color: #2ecc71;
+$price-color: #e67e22;
+$rating-color: #f1c40f;
+$card-border-color: #ddd;
+$box-shadow-color: rgba(0, 0, 0, 0.1);
+
+.product-card {
+  border: 1px solid $card-border-color;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px $box-shadow-color;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+  }
+
+  .product-image {
+    width: auto;
+    height: 275px;
+  }
+
+  .product-image {
+    img {
+      width: auto;
+      height: 100%;
+    }
+  }
+
+  .product-info {
+    padding: 16px;
+    text-align: center;
+
+    .product-name {
+      font-size: 1.2em;
+      margin: 0.5em 0;
+      color: #333;
+    }
+
+    .product-price {
+      font-size: 1.1em;
+      color: $price-color;
+      margin-bottom: 0.5em;
+    }
+
+    .product-rating {
+      margin: 0.5em 0;
+      font-size: 0.9em;
+      color: $rating-color;
+
+      span {
+        font-size: 1em;
+      }
+
+      small {
+        font-size: 0.8em;
+        color: #777;
+      }
+    }
+
+    .product-actions {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+
+      .btn {
+        padding: 8px 12px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 0.9em;
+        font-weight: bold;
+        color: #fff;
+
+        &.btn-view {
+          background-color: $primary-color;
+
+          &:hover {
+            opacity: 0.9;
+          }
+        }
+
+        &.btn-add-to-cart {
+          background-color: $secondary-color;
+
+          &:hover {
+            opacity: 0.9;
+          }
+        }
+      }
+    }
+  }
+}

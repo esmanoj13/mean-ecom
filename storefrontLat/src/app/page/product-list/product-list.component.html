@@ -1,0 +1,48 @@
+<div class="flex px-10 py-2">
+  <div class="w-3/12">
+    <h2 class="bg-slate-200 w-12 border-spacing-3 border-r-8">Filter</h2>
+    <mat-form-field>
+      <mat-label>Category</mat-label>
+      <mat-select
+        [(ngModel)]="categoryId"
+        name="categoryId"
+        (selectionChange)="onCategoryChange($event.value)"
+      >
+        @for(item of category; track item){
+        <mat-option value="{{ item._id }}">{{ item.name }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Brand</mat-label>
+      <mat-select
+        [(ngModel)]="brandId"
+        name="brandId"
+        (selectionChange)="onBrandChange($event.value)"
+      >
+        @for(item of brand; track item){
+        <mat-option value="{{ item._id }}">{{ item.name }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="w-9/12">
+    <div class="flex justify-end">
+      <mat-form-field>
+        <mat-label>Order by</mat-label>
+        <mat-select name="categoryId" (selectionChange)="orderby($event.value)">
+          <mat-option value="-1">Price high to low</mat-option>
+          <mat-option value="1">Price low to high</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    @if(products.length > 0){
+    <app-product-slider
+      title="product"
+      [product]="products"
+    ></app-product-slider>
+    }@else{
+    <h1 class="text-3xl font-bold">Product is not found</h1>
+    }
+  </div>
+</div>

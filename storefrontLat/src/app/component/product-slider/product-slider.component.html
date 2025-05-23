@@ -1,0 +1,11 @@
+<div class="flex justify-center items-center my-4 w-full">
+  <h2 class="text-3xl font-bold">{{ title() }}</h2>
+</div>
+
+<div class="flex justify-start">
+  @for(item of product(); track item){
+  <div class="w-3/12 m-4">
+    <app-product-card [item]="item"></app-product-card>
+  </div>
+  }
+</div>

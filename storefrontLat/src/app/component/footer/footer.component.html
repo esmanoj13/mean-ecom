@@ -1,0 +1,27 @@
+<footer class="amazon-footer">
+  <!-- Back to Top Button -->
+  <div class="back-to-top">
+    <a href="#top">Back to Top</a>
+  </div>
+
+  <!-- Footer Links -->
+  <div class="footer-links">
+    @for(item of footerData; track item.title ){
+    <div class="footer-column">
+      <h4>{{ item.title }}</h4>
+      <ul>
+        @for(link of item.links; track link.label){
+        <li>
+          <a href="{{ link.url }}">{{ link.label }}</a>
+        </li>
+        }
+      </ul>
+    </div>
+    }
+  </div>
+
+  <!-- Footer Bottom -->
+  <div class="footer-bottom">
+    <p>© {{ currentYear }}, YourWebsiteName.com, Inc. or its affiliates</p>
+  </div>
+</footer>

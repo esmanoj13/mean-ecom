@@ -1,0 +1,42 @@
+<div class="flex flex-col justify-center items-center w-full">
+  @if(isEdit){
+  <h2 class="text-lg">Update Brand</h2>
+  } @else{
+  <h2 class="text-3xl pb-2">Add new Brand</h2>
+  }
+
+  <form class="flex flex-col example-form shadow-sm">
+    <div class="flex flex-wrap">
+      <div class="w-full">
+        <mat-form-field class="example-full-width">
+          <mat-label>Brand</mat-label>
+          <input
+            type="text"
+            matInput
+            placeholder="Mobile"
+            [(ngModel)]="name"
+            name="name"
+          />
+        </mat-form-field>
+      </div>
+    </div>
+  </form>
+  @if(isEdit){
+  <button
+    class="bg-blue-500 text-white font-bold py-2 px-4 rounded"
+    mat-raised-button
+    (click)="updateBrand()"
+  >
+    Update
+  </button>
+  }@else {
+  <button
+    class="bg-blue-500 text-white font-bold py-2 px-4 rounded"
+    mat-raised-button
+    (click)="addBrand()"
+    [disabled]="!name"
+  >
+    Add
+  </button>
+  }
+</div>

@@ -1,0 +1,15 @@
+@if(products?.length){
+<app-product-slider title="Wishlist" [product]="products"></app-product-slider>
+}@else{
+<div class="flex justify-center flex-col align-middle">
+  <h1 class="text-3xl font-bold p-3">
+    No item in wishlist please select the item for wishlist
+  </h1>
+  <button
+    class="px-6 py-3 bg-slate-300 text-gray-800 rounded-lg shadow-md hover:bg-gray-300 transition w-fit"
+    routerLink="/"
+  >
+    Home
+  </button>
+</div>
+}
