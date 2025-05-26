@@ -24,11 +24,10 @@ export class ProductDisplayComponent implements OnInit {
   id: string | null = null;
   product!: Product;
   finalPrice: number = 0;
-  wishlist: Product[] = [];
   cartlist: Product[] = [];
   similarProducts: Product[] = [];
   cartService = inject(CartService);
-  // item = input.required<Product>();
+  wishlist = this.wishlistService.wishlistItems;
 
   ngOnInit(): void {
     this.getWishList();
@@ -42,21 +41,14 @@ export class ProductDisplayComponent implements OnInit {
     });
     this.finalPrice = this.calculateFinalPrice();
   }
-
   getWishList() {
-    this.wishlistService.getWishlitItems().subscribe((data) => {
-      this.wishlist = data;
-    });
+    this.wishlistService.wishlistItems;
   }
 
   getCartList() {
     this.cartService.getCartItems().subscribe((data) => {
       console.log(data);
     });
-  }
-
-  isInWishlist(item: any): boolean {
-    return this.wishlist.some((w) => w._id === item._id);
   }
 
   isInCart(item: Product): boolean {
@@ -97,7 +89,6 @@ export class ProductDisplayComponent implements OnInit {
   getsimilarProducts() {
     if (!this.product) return;
     const categoryId = this.product.categoryId._id || '';
-    // console.log('Fetching Similar Products for:', categoryId);
     this.allProductService
       .getSearchProducts('', categoryId, '', '', 1, 1, 5)
       .subscribe((data) => {
@@ -108,20 +99,22 @@ export class ProductDisplayComponent implements OnInit {
         // console.log('similar product:', this.similarProducts);
       });
   }
-
-  addToWishlist(product: Product) {
-    if (!this.isInWishlist(product)) {
-      this.wishlistService.addToWishlist(product._id!).subscribe({
-        next: () => this.getWishList(),
-        error: (error) => console.error('Error adding to wishlist:', error),
-      });
-    } else {
-      this.wishlistService.removeFromWishlist(product._id!).subscribe({
-        next: () => this.getWishList(),
-        error: (error) => console.error('Error removing from wishlist:', error),
-      });
-    }
+  toggleWishlist(product: Product) {
+    this.wishlistService.toogleWishlist(product);
   }
+  // addToWishlist(product: Product) {
+  //   if (!this.isInWishlist(product)) {
+  //     this.wishlistService.addToWishlist(product._id!).subscribe({
+  //       next: () => this.getWishList(),
+  //       error: (error) => console.error('Error adding to wishlist:', error),
+  //     });
+  //   } else {
+  //     this.wishlistService.removeFromWishlist(product._id!).subscribe({
+  //       next: () => this.getWishList(),
+  //       error: (error) => console.error('Error removing from wishlist:', error),
+  //     });
+  //   }
+  // }
 
   addToCart(product: Product) {
     if (!this.isInCart(product)) {

@@ -31,8 +31,17 @@
         <button routerLink="/login">Login</button>
         }
       </div>
-      <button mat-fab aria-label="Toggle Wishlist" routerLink="/wishlist">
-        <mat-icon class="text-pink-300">favorite</mat-icon>
+      <button
+        mat-fab
+        aria-label="Toggle Wishlist"
+        routerLink="/wishlist"
+        class="relative flex items-center justify-center"
+      >
+        <mat-icon class="text-pink-300">favorite</mat-icon
+        ><span
+          class="wislist-count absolute -top-0 -right-0 bg-pink-600 text-white text-xs font-semibold rounded-full w-4 h-4 flex items-center justify-center shadow"
+          >{{ wishlistCount() }}</span
+        >
       </button>
       <button class="icon-button" aria-label="Cart" routerLink="/cart">
         <mat-icon class="text-blue-500">shopping_cart</mat-icon>

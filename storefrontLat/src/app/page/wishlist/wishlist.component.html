@@ -1,5 +1,8 @@
-@if(products?.length){
-<app-product-slider title="Wishlist" [product]="products"></app-product-slider>
+@if(wishlistItems().length){
+<app-product-slider
+  title="Wishlist"
+  [product]="wishlistItems()"
+></app-product-slider>
 }@else{
 <div class="flex justify-center flex-col align-middle">
   <h1 class="text-3xl font-bold p-3">

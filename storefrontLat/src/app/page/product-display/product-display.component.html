@@ -46,15 +46,17 @@
       <div class="py-6">
         <button
           mat-fab
-          extended
           aria-label="Toggle Wishlist"
-          (click)="addToWishlist(product)"
+          (click)="toggleWishlist(product)"
         >
           <ng-container>
-            @if(!isInWishlist(product)){
-
-            <mat-icon>favorite_border</mat-icon> Add to wishlist }@else {
-            <mat-icon>favorite</mat-icon> Remove to wishlist }
+            <mat-icon>
+              {{
+                wishlistService.isInWishlist(product._id!)
+                  ? "favorite"
+                  : "favorite_border"
+              }}
+            </mat-icon>
           </ng-container>
         </button>
       </div>

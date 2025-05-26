@@ -20,7 +20,6 @@
         </h2>
       </mat-card-title>
     </mat-card-header>
-
     <div class="flex justify-start p-2 align-middle mt-2">
       <span
         class="text-xs font-bold text-white text-center bg-black px-2 py-1 rounded"
@@ -36,9 +35,8 @@
       >
       }
     </div>
-
     <mat-card-actions class="flex justify-between">
-      <button mat-fab aria-label="Toggle cart" (clik)="addToCart(item()!)">
+      <button mat-fab aria-label="Toggle cart" (click)="addToCart(item()!)">
         @if(!isInCart(item())){
         <mat-icon>shopping_cart</mat-icon>
         } @else {
@@ -49,13 +47,15 @@
       <button
         mat-fab
         aria-label="Toggle Wishlist"
-        (click)="addToWishlist(item())"
+        (click)="toggleWishlist(item())"
       >
-        @if(!isInWishlist(item())){
-        <mat-icon>favorite_border</mat-icon>
-        }@else {
-        <mat-icon>favorite</mat-icon>
-        }
+        <mat-icon>
+          {{
+            wishlistService.isInWishlist(item()._id!)
+              ? "favorite"
+              : "favorite_border"
+          }}
+        </mat-icon>
       </button>
     </mat-card-actions>
   </mat-card>

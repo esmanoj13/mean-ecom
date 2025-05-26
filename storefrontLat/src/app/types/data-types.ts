@@ -8,7 +8,7 @@ export interface Brand {
 }
 
 export interface Product {
-  _id?: string;
+  _id?: string | undefined;
   name: string;
   shortDescription: string;
   description: string;

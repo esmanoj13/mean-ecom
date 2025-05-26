@@ -26,61 +26,30 @@ export class ProductCardComponent implements OnInit {
   ngOnInit(): void {
     this.getWishList();
     this.getCartList();
+    this.wishlistService.loadWishlist();
   }
-
+  // This is to get the wishlist details
   getWishList() {
-    this.wishlistService.getWishlitItems().subscribe((data) => {
-      this.wishlist = data;    
-    });
+    this.wishlistService.wishlistItems();
   }
-
+  // This is to get the icon of the wishlist
+  wishlistIcon(product: Product): boolean {
+    if (!product._id) return false;
+    return this.wishlistService.isInWishlist(product._id);
+  }
+  toggleWishlist(product: Product) {
+    this.wishlistService.toogleWishlist(product);
+  }
+  // This is to get the cart details
   getCartList() {
-    this.cartService.getCartItems().subscribe((data) => {
-      console.log('cart:', data);
-    });
+    this.cartService.getCartItems().subscribe((data) => {});
   }
-
-  isInWishlist(item: Product): boolean {    
-    if (this.wishlist) {
-      return this.wishlist.some((w) => w._id === item._id);
-    }
-    return false;
-  }
-
   productdisplay(id?: string) {
-    console.log(id);
     this.router.navigate(['/product/' + id]);
   }
-
   isInCart(item: Product): boolean {
     return this.cartlist.some((w) => w._id === item._id);
   }
-
-  // This is add the item to the wishlist
-  addToWishlist(product: Product) {
-    if (!this.isInWishlist(product)) {
-      this.wishlistService.addToWishlist(product._id!).subscribe({
-        next: () => this.getWishList(),
-        error: (error) => console.error('Error adding to wishlist:', error),
-      });
-    } else {
-      this.wishlistService.removeFromWishlist(product._id!).subscribe({
-        next: () => this.getWishList(),
-        error: (error) => console.error('Error removing from wishlist:', error),
-      });
-    }
-  }
-
-  // deleteFromWihlist(product: Product, event: Event) {
-  //   event.stopPropagation();
-  //   if (product._id) {
-  //     this.wishlistService.removeToWishlist(product._id).subscribe(() => {
-  //       // this.productdisplay(product._id);
-  //       this.getWishList();
-  //     });
-  //     this.wishlist = this.wishlist.filter((w) => w._id !== product._id);
-  //   }
-  // }
 
   // This is add the item to the cart
   addToCart(product: Product) {
@@ -94,12 +63,4 @@ export class ProductCardComponent implements OnInit {
       });
     }
   }
-  // removeToCart(product: Product, event: Event) {
-  //   event.stopPropagation();
-  //   if (!this.fetchInCart(product._id)) {
-  //     this.cartService.addToCartItems(product._id!, 1);
-  //   } else {
-  //     this.cartService.removeFromCart(product._id!);
-  //   }
-  // }
 }

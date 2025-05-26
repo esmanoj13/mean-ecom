@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal, computed } from '@angular/core';
 import { CategoryService } from '../../services/category.service';
 import { Brand, Category, Product } from '../../types/data-types';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { AllproductsService } from '../../services/allproducts.service';
 import { BrandService } from '../../services/brand.service';
 import { MatIcon } from '@angular/material/icon';
+import { WishlistService } from '../../services/wishlist.service';
 
 @Component({
   selector: 'app-header',
@@ -19,17 +20,15 @@ export class HeaderComponent implements OnInit {
   searchTerm: string = '';
   categoryId: string = '';
   brandId: string = '';
-
   router = inject(Router);
   route = inject(ActivatedRoute);
   brandService = inject(BrandService);
   authService = inject(AuthService);
   categoryService = inject(CategoryService);
-
+  wishlistService = inject(WishlistService);
   ecommCompany: string = 'EasyMart';
   category: Category[] = [];
   brand: Brand[] = [];
-
   ngOnInit(): void {
     this.categoryService.getcategories().subscribe((data) => {
       this.category = data;
@@ -38,7 +37,6 @@ export class HeaderComponent implements OnInit {
     this.brandService.getAllBrands().subscribe((data) => {
       this.brand = data;
     });
-
     // Subscribe to query parameter changes
     this.route.queryParams.subscribe((params) => {
       this.searchTerm = params['search'] || '';
@@ -46,7 +44,7 @@ export class HeaderComponent implements OnInit {
       this.brandId = params['brandId'] || '';
     });
   }
-
+  wishlistCount = computed(() => this.wishlistService.wishlistItems().length);
   searchitem(event: any) {
     const searchValue = event.target.value.trim();
     if (!searchValue) return;
