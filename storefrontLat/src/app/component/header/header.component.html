@@ -1,4 +1,4 @@
-<div class="header-container">
+<div class="header-container shadow">
   <div class="top-bar">
     <div class="logo">
       <a routerLink="/">{{ ecommCompany }}</a>
@@ -28,7 +28,7 @@
           <!-- Replace with profile icon -->
         </h2>
         } } @else {
-        <button routerLink="/login">Login</button>
+        <button routerLink="/login"><mat-icon>person</mat-icon></button>
         }
       </div>
       <button
@@ -55,13 +55,13 @@
           >{{ cartItemCount() }}</span
         >
       </button>
-      <button (click)="logout()">Logout</button>
+      <button (click)="logout()"><mat-icon>logout</mat-icon></button>
     </div>
   </div>
   <div class="categories">
     <ul>
       @for(item of category;track $index){
-      <li (click)="searchCategory(item._id!)" class="cursor-pointer">
+      <li (click)="searchCategory(item._id!)" class="cursor-pointer category">
         <a>{{ item.name }}</a>
       </li>
       }

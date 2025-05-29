@@ -17,6 +17,7 @@ import { adminGuard } from './guard/admin-guard';
 import { UserProfileComponent } from './component/user-profile/user-profile.component';
 import { WishlistComponent } from './page/wishlist/wishlist.component';
 import { CartComponent } from './page/cart/cart.component';
+import { SearchComponent } from './page/search/search.component';
 
 export const routes: Routes = [
   {
@@ -103,5 +104,9 @@ export const routes: Routes = [
     path: 'user-profile',
     component: UserProfileComponent,
     canActivate: [authGuard],
+  },
+  {
+    path: 'search',
+    component: SearchComponent,
   },
 ];

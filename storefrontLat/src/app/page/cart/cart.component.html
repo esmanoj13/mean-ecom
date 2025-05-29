@@ -1,7 +1,7 @@
 <!-- @if(cartItems.length){ @for(item of cartItems;track item){ -->
-<div class="container mx-auto p-6">
-  <h1 class="text-3xl font-bold text-gray-800 mb-6">Shopping Cart</h1>
+<div class="container mx-auto p-6 h-96">
   @if(getcartItems().length){
+  <h1 class="text-3xl font-bold text-gray-800 mb-6">Shopping Cart</h1>
   <div class="flex space-x-4">
     <div class="w-3/4">
       @for(item of getcartItems(); track $index){
@@ -79,8 +79,9 @@
     </div>
   </div>
   } @else{
-  <div class="text-center">
+  <div class="flex flex-col items-center justify-center">
     <h2 class="center text-4xl font-bold">Your cart is empty</h2>
+    <p class="text-gray-600 mt-2">Add items to your cart to see them here.</p>
     <button
       class="px-6 py-3 bg-green-800 text-white rounded-lg shadow-md hover:bg-green-700 transition w-fit mt-3"
       routerLink="/"

@@ -59,6 +59,9 @@
       <button class="w-full" mat-raised-button (click)="addLogin($event)">
         Submit
       </button>
+      <mat-error class="mt-2 text-xs">
+        {{ errorMessage }}
+      </mat-error>
       <div class="d-flex justify-center items-center pt-2">
         Not have an account
         <button class="underline" (click)="register()">Register</button>

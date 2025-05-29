@@ -1,10 +1,10 @@
-<div class="flex justify-between items-center p-4 rounded shadow">
-  <h2 class="text-lg font-bold">Manage Product</h2>
+<div class="flex justify-between items-center p-4 rounded">
+  <h2 class="font-bold text-2xl">Manage Product</h2>
   <button mat-raised-button (click)="getProductForm()">Add product</button>
 </div>
 <div class="relative w-full max-h-full m-4">
   <mat-form-field class="w-full">
-    <mat-label>Filter</mat-label>
+    <mat-label>Search</mat-label>
     <input
       matInput
       (keyup)="applyFilter($event)"

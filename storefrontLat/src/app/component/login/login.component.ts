@@ -14,6 +14,7 @@ import { of } from 'rxjs';
   styleUrl: './login.component.scss',
 })
 export class LoginComponent {
+  errorMessage: string = '';
   authService = inject(AuthService);
   router = inject(Router);
   fb = inject(FormBuilder);
@@ -42,6 +43,8 @@ export class LoginComponent {
       .onLogin(email!, password!)
       .pipe(
         catchError((error) => {
+          this.errorMessage =
+            error?.error?.message || 'Invalid email or password.';
           console.error('Login failed', error);
           return of(null); // Handle error gracefully
         })

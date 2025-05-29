@@ -49,9 +49,9 @@ export class HeaderComponent implements OnInit {
   wishlistCount = computed(() => this.wishlistService.wishlistItems().length);
   cartItemCount = computed(() => this.cartService.cartItems().length);
   searchitem(event: any) {
-    const searchValue = event.target.value.trim();
+    let searchValue = event.target.value.trim();
     if (!searchValue) return;
-    this.router.navigate(['/product'], {
+    this.router.navigate(['/search'], {
       queryParams: { search: searchValue },
       queryParamsHandling: 'merge',
     });

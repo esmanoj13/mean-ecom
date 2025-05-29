@@ -4,12 +4,11 @@
   [product]="wishlistItems()"
 ></app-product-slider>
 }@else{
-<div class="flex justify-center flex-col align-middle">
-  <h1 class="text-3xl font-bold p-3">
-    No item in wishlist please select the item for wishlist
-  </h1>
+<div class="flex justify-center flex-col items-center m-4 h-96">
+  <h1 class="text-3xl font-bold p-3">Your wishlist is empty</h1>
+  <p>Add Product in wishlist</p>
   <button
-    class="px-6 py-3 bg-slate-300 text-gray-800 rounded-lg shadow-md hover:bg-gray-300 transition w-fit"
+    class="px-4 py-2 bg-black text-white rounded-lg shadow-md hover:bg-gray-700 transition w-fit mt-3"
     routerLink="/"
   >
     Home

@@ -3,11 +3,12 @@ import { ProductSliderComponent } from '../../component/product-slider/product-s
 import { WishlistService } from '../../services/wishlist.service';
 import { MatButtonModule } from '@angular/material/button';
 import { Product } from '../../types/data-types';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-wishlist',
   standalone: true,
-  imports: [ProductSliderComponent, MatButtonModule],
+  imports: [ProductSliderComponent, MatButtonModule, RouterLink],
   templateUrl: './wishlist.component.html',
   styleUrl: './wishlist.component.scss',
 })

@@ -100,33 +100,7 @@ export class ProductDisplayComponent implements OnInit {
   toggleWishlist(product: Product) {
     this.wishlistService.toogleWishlist(product);
   }
-  // addToWishlist(product: Product) {
-  //   if (!this.isInWishlist(product)) {
-  //     this.wishlistService.addToWishlist(product._id!).subscribe({
-  //       next: () => this.getWishList(),
-  //       error: (error) => console.error('Error adding to wishlist:', error),
-  //     });
-  //   } else {
-  //     this.wishlistService.removeFromWishlist(product._id!).subscribe({
-  //       next: () => this.getWishList(),
-  //       error: (error) => console.error('Error removing from wishlist:', error),
-  //     });
-  //   }
-  // }
   toggleCartItem(product: Product) {
     this.cartService.toggleCartItem(product, 1);
   }
-  // addToCart(product: Product) {
-  //   if (!this.isInCart(product)) {
-  //     this.cartService.addToCartItems(product._id!, 1).subscribe({
-  //       next: () => this.getCartList(),
-  //       error: (error) => console.error('Error adding to cart:', error),
-  //     });
-  //   } else {
-  //     this.cartService.removeFromCart(product._id!).subscribe({
-  //       next: () => this.getCartList(),
-  //       error: (error) => console.error('Error deleting from cart:', error),
-  //     });
-  //   }
-  // }
 }

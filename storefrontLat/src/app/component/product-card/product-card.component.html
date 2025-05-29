@@ -20,21 +20,28 @@
         </h2>
       </mat-card-title>
     </mat-card-header>
+    @if(item().discount > 0){
     <div class="flex justify-start p-2 align-middle mt-2">
       <span
-        class="text-xs font-bold text-white text-center bg-black px-2 py-1 rounded"
+        class="text-xs font-bold text-white text-center bg-black px-2 py-1 rounded flex items-center"
         >Save {{ item().discount }}%</span
       >&nbsp;
-      <span class="text-xl font-bold text-gray-600 line-through"
+      <span
+        class="text-xl font-bold text-gray-600 line-through flex items-center"
         >${{ item().price }}</span
-      >&nbsp; @if(item().discount){
+      >&nbsp;
       <span class="text-3xl font-bold text-red-700"
         >${{
           this.item().price - (this.item().price * this.item().discount) / 100
         }}</span
       >
-      }
     </div>
+    } @else {
+    <div class="flex justify-start p-2 align-middle mt-2">
+      <span class="text-xl font-bold text-red-700">${{ item().price }}</span>
+    </div>
+    }
+
     <mat-card-actions class="flex justify-between">
       <button
         mat-fab
@@ -46,7 +53,7 @@
             cartService.isInCart(item()._id!)
               ? "remove_shopping_cart"
               : "shopping_cart"
-          }}      
+          }}
         </mat-icon>
       </button>
 
