@@ -33,7 +33,11 @@ const removeFromCart = async (req, res) => {
     const userId = req.user.id;
     const productId = req.params.id;
     try {
-        let product = Cart.findOneAndDelete({ userId, productId })
+        let product = await Cart.findOneAndDelete({ userId, productId });
+        if (!product) {
+            return res.status(404).json({ error: "product not found" })
+        }
+        return res.status(200).json({ message: "Product removed from cart successfully" });
     } catch (error) {
         console.error(error);
         return res.status(500).json({ message: "An error occurred while removing into the cart", error });
@@ -56,4 +60,34 @@ const getCartItems = async (req, res) => {
     }
 }
 
-export { addProductCart, removeFromCart, getCartItems }
+// update the cart when clicking on the inc/dec button in the cart page
+const updateCart = async (req, res) => {
+    const userId = req.user.id;
+    const productId = req.params.id;
+    const { quantity } = req.body;
+    if (!productId || quantity == null) {
+        return res.status(400).json({ message: 'Product ID and quantity are required' });
+    }
+    try {
+        let cart = await Cart.findOne({ userId, productId });
+        if (!cart) {
+            return res.status(404).json({ message: 'Cart not found' });
+        }
+        if (quantity <= 0) {
+            // If quantity is 0 or less, remove the product from the cart
+            await Cart.deleteOne({ userId, productId });
+            return res.status(200).json({ message: 'Product removed from cart' });
+        } else {
+            // Update the quantity of the product in the cart
+            cart.quantity = quantity;
+            await cart.save();
+            return res.status(200).json({ message: 'Cart updated successfully', cart });
+        }
+    }
+    catch (error) {
+        console.error('Error updating cart:', error);
+        res.status(500).json({ message: 'Something went wrong' });
+    }
+}
+
+export { addProductCart, removeFromCart, getCartItems, updateCart };

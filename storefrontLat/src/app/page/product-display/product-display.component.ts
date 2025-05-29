@@ -46,9 +46,7 @@ export class ProductDisplayComponent implements OnInit {
   }
 
   getCartList() {
-    this.cartService.getCartItems().subscribe((data) => {
-      console.log(data);
-    });
+    this.cartService.loadcart();
   }
 
   isInCart(item: Product): boolean {
@@ -115,18 +113,20 @@ export class ProductDisplayComponent implements OnInit {
   //     });
   //   }
   // }
-
-  addToCart(product: Product) {
-    if (!this.isInCart(product)) {
-      this.cartService.addToCartItems(product._id!, 1).subscribe({
-        next: () => this.getCartList(),
-        error: (error) => console.error('Error adding to cart:', error),
-      });
-    } else {
-      this.cartService.removeFromCart(product._id!).subscribe({
-        next: () => this.getCartList(),
-        error: (error) => console.error('Error deleting from cart:', error),
-      });
-    }
+  toggleCartItem(product: Product) {
+    this.cartService.toggleCartItem(product, 1);
   }
+  // addToCart(product: Product) {
+  //   if (!this.isInCart(product)) {
+  //     this.cartService.addToCartItems(product._id!, 1).subscribe({
+  //       next: () => this.getCartList(),
+  //       error: (error) => console.error('Error adding to cart:', error),
+  //     });
+  //   } else {
+  //     this.cartService.removeFromCart(product._id!).subscribe({
+  //       next: () => this.getCartList(),
+  //       error: (error) => console.error('Error deleting from cart:', error),
+  //     });
+  //   }
+  // }
 }

@@ -43,8 +43,17 @@
           >{{ wishlistCount() }}</span
         >
       </button>
-      <button class="icon-button" aria-label="Cart" routerLink="/cart">
+      <button
+        class="icon-button"
+        aria-label="Cart"
+        routerLink="/cart"
+        class="relative flex items-center justify-center"
+      >
         <mat-icon class="text-blue-500">shopping_cart</mat-icon>
+        <span
+          class="cart-count absolute -top-0 -right-0 bg-pink-600 text-white text-xs font-semibold rounded-full w-4 h-4 flex items-center justify-center shadow"
+          >{{ cartItemCount() }}</span
+        >
       </button>
       <button (click)="logout()">Logout</button>
     </div>

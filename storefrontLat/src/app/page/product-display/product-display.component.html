@@ -72,12 +72,21 @@
           mat-fab
           extended
           aria-label="Toggle cart"
-          (click)="addToCart(product)"
+          (click)="toggleCartItem(product)"
+          class="flex items-center space-x-2"
         >
           <ng-container>
-            @if(!isInCart(product)){
-            <mat-icon>shopping_cart</mat-icon> Add to cart } @else {
-            <mat-icon>remove_shopping_cart</mat-icon> Remove from cart }
+            <mat-icon>
+              {{
+                cartService.isInCart(product._id!)
+                  ? "remove_shopping_cart"
+                  : "shopping_cart"
+              }} </mat-icon
+            ><span>{{
+              cartService.isInCart(product._id!)
+                ? "Remove from cart"
+                : "Add to cart"
+            }}</span>
           </ng-container>
         </button>
       </div>

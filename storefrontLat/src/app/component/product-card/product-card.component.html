@@ -36,12 +36,18 @@
       }
     </div>
     <mat-card-actions class="flex justify-between">
-      <button mat-fab aria-label="Toggle cart" (click)="addToCart(item()!)">
-        @if(!isInCart(item())){
-        <mat-icon>shopping_cart</mat-icon>
-        } @else {
-        <mat-icon>remove_shopping_cart</mat-icon>
-        }
+      <button
+        mat-fab
+        aria-label="Toggle cart"
+        (click)="toggleCartItem(item()!)"
+      >
+        <mat-icon>
+          {{
+            cartService.isInCart(item()._id!)
+              ? "remove_shopping_cart"
+              : "shopping_cart"
+          }}      
+        </mat-icon>
       </button>
 
       <button

@@ -25,8 +25,10 @@ export class ProductCardComponent implements OnInit {
 
   ngOnInit(): void {
     this.getWishList();
-    this.getCartList();
+    // this.getCartList();
     this.wishlistService.loadWishlist();
+    // Load cart items when the component initializes using signal
+    this.cartService.loadcart();
   }
   // This is to get the wishlist details
   getWishList() {
@@ -42,7 +44,7 @@ export class ProductCardComponent implements OnInit {
   }
   // This is to get the cart details
   getCartList() {
-    this.cartService.getCartItems().subscribe((data) => {});
+    this.cartService.cartItems();
   }
   productdisplay(id?: string) {
     this.router.navigate(['/product/' + id]);
@@ -50,17 +52,20 @@ export class ProductCardComponent implements OnInit {
   isInCart(item: Product): boolean {
     return this.cartlist.some((w) => w._id === item._id);
   }
+  toggleCartItem(product: Product) {
+    this.cartService.toggleCartItem(product, 1);
+  }
 
   // This is add the item to the cart
-  addToCart(product: Product) {
-    if (!this.isInCart(product)) {
-      this.cartService.addToCartItems(product._id!, 1).subscribe(() => {
-        this.cartService.getCartItems();
-      });
-    } else {
-      this.cartService.removeFromCart(product._id!).subscribe(() => {
-        this.cartService.getCartItems();
-      });
-    }
-  }
+  // addToCart(product: Product) {
+  //   if (!this.isInCart(product)) {
+  //     this.cartService.addToCartItems(product._id!, 1).subscribe(() => {
+  //       this.cartService.getCartItems();
+  //     });
+  //   } else {
+  //     this.cartService.removeFromCart(product._id!).subscribe(() => {
+  //       this.cartService.getCartItems();
+  //     });
+  //   }
+  // }
 }

@@ -8,6 +8,7 @@ import { AllproductsService } from '../../services/allproducts.service';
 import { BrandService } from '../../services/brand.service';
 import { MatIcon } from '@angular/material/icon';
 import { WishlistService } from '../../services/wishlist.service';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-header',
@@ -26,6 +27,7 @@ export class HeaderComponent implements OnInit {
   authService = inject(AuthService);
   categoryService = inject(CategoryService);
   wishlistService = inject(WishlistService);
+  cartService = inject(CartService);
   ecommCompany: string = 'EasyMart';
   category: Category[] = [];
   brand: Brand[] = [];
@@ -45,6 +47,7 @@ export class HeaderComponent implements OnInit {
     });
   }
   wishlistCount = computed(() => this.wishlistService.wishlistItems().length);
+  cartItemCount = computed(() => this.cartService.cartItems().length);
   searchitem(event: any) {
     const searchValue = event.target.value.trim();
     if (!searchValue) return;
