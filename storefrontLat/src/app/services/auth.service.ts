@@ -2,12 +2,16 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, afterNextRender, inject } from '@angular/core';
 import { Register, Login } from '../types/data-types';
 import { environment } from '../../environments/environment';
+import { CartService } from './cart.service';
+import { WishlistService } from './wishlist.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private http = inject(HttpClient);
+  private cartService = inject(CartService);
+  private wishlistService = inject(WishlistService);
   constructor() {}
   private $apiURL = environment.API_URL;
   onRegister(name: string, email: string, password: string) {
@@ -56,6 +60,8 @@ export class AuthService {
   logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    this.cartService.cartSignal.set([]);
+    this.wishlistService.wishlistSignal.set([]);
   }
 
   get customerData() {

@@ -1,12 +1,13 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { AllproductsService } from '../../services/allproducts.service';
-import { Brand, Category, Product } from '../../types/data-types';
+import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ProductSliderComponent } from '../../component/product-slider/product-slider.component';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
+
+import { AllproductsService } from '../../services/allproducts.service';
+import { Brand, Category, Product } from '../../types/data-types';
+import { ProductSliderComponent } from '../../component/product-slider/product-slider.component';
 import { CategoryService } from '../../services/category.service';
-import { FormsModule } from '@angular/forms';
 import { BrandService } from '../../services/brand.service';
 @Component({
   selector: 'app-product-list',
@@ -21,7 +22,7 @@ import { BrandService } from '../../services/brand.service';
   styleUrl: './product-list.component.scss',
 })
 export class ProductListComponent implements OnInit {
-  allproductService = inject(AllproductsService);
+  productService = inject(AllproductsService);
   categoryService = inject(CategoryService);
   brandService = inject(BrandService);
   activatedRoute = inject(ActivatedRoute);
@@ -29,6 +30,7 @@ export class ProductListComponent implements OnInit {
 
   searchTerm: string = '';
   categoryId: string = '';
+  categoryName: string = '';
   brandId: string = '';
   sortBy: string = '';
   sortOrder: number = 1;
@@ -36,52 +38,70 @@ export class ProductListComponent implements OnInit {
   pageSize: number = 10;
 
   products: Product[] = [];
-  category: Category[] = [];
-  brand: Brand[] = [];
+  categorys: Category[] = [];
+  brands: Brand[] = [];
 
   ngOnInit(): void {
+    this.fetchCategories();
+    this.fetchBrands();
     this.activatedRoute.queryParams.subscribe((params) => {
-      this.searchTerm = params['search'] || '';
       this.categoryId = params['categoryId'] || '';
       this.brandId = params['brandId'] || '';
       this.getsearchProducts();
+      this.getCategoryName(this.categoryId);
     });
+  }
 
-    this.categoryService.getcategories().subscribe((data) => {
-      this.category = data;
-    });
-    this.brandService.getAllBrands().subscribe((data) => {
-      this.brand = data;
-    });
-  }
   getsearchProducts() {
-    setTimeout(() => {
-      this.allproductService
-        .getSearchProducts(
-          this.searchTerm,
-          this.categoryId,
-          this.brandId,
-          this.sortBy,
-          this.sortOrder,
-          this.page,
-          this.pageSize
-        )
-        .subscribe({
-          next: (data) => {
-            this.products = data;
-            console.log('product-list-this.products', this.products);
-          },
-          error: (err) => {
-            console.error('Error fetching search products:', err);
-          },
-        });
-    }, 100);
+    this.productService
+      .getSearchProducts(
+        this.searchTerm,
+        this.categoryId,
+        this.brandId,
+        this.sortBy,
+        this.sortOrder,
+        this.page,
+        this.pageSize
+      )
+      .subscribe({
+        next: (data) => {
+          this.products = data;
+        },
+        error: (err) => {
+          console.error('Error fetching search products:', err);
+        },
+      });
   }
+
+  fetchCategories() {
+    this.categoryService.getcategories().subscribe({
+      next: (data) => {
+        this.categorys = data;
+        this.getCategoryName(this.categoryId);
+      },
+      error: (err) => {
+        console.error('Error fetching categories:', err);
+      },
+    });
+  }
+  fetchBrands() {
+    this.brandService.getAllBrands().subscribe({
+      next: (data) => {
+        this.brands = data;
+      },
+      error: (err) => {
+        console.error('Error fetching brands:', err);
+      },
+    });
+  }
+
   onCategoryChange(categoryId: string) {
+    this.searchTerm = '';
     this.router.navigate([], {
       queryParams: { categoryId },
       queryParamsHandling: 'merge',
     });
+    this.getCategoryName(categoryId);
   }
 
   /** Updates query params when brand changes */
@@ -94,8 +114,15 @@ export class ProductListComponent implements OnInit {
 
   orderby(event: any) {
     this.sortBy = 'price';
-    console.log(event);
     this.sortOrder = event;
     this.getsearchProducts();
+  }
+  getCategoryName(categoryId: string) {
+    const selectedCategory = this.categorys.find(
+      (cat) => cat._id === categoryId
+    );
+    if (selectedCategory) {
+      this.categoryName = selectedCategory.name;
+    }
   }
 }

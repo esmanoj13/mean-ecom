@@ -20,6 +20,7 @@ import { CartService } from '../../services/cart.service';
 export class HeaderComponent implements OnInit {
   searchTerm: string = '';
   categoryId: string = '';
+  categoryName: string = '';
   brandId: string = '';
   router = inject(Router);
   route = inject(ActivatedRoute);
@@ -46,8 +47,10 @@ export class HeaderComponent implements OnInit {
       this.brandId = params['brandId'] || '';
     });
   }
+
   wishlistCount = computed(() => this.wishlistService.wishlistItems().length);
   cartItemCount = computed(() => this.cartService.cartItems().length);
+
   searchitem(event: any) {
     let searchValue = event.target.value.trim();
     if (!searchValue) return;

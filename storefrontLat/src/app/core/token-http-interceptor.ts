@@ -2,11 +2,12 @@ import { HttpInterceptorFn } from '@angular/common/http';
 
 export const tokenHTTPInterceptor: HttpInterceptorFn = (req, next) => {
   let token: string | null = null;
-  try {
-    token = localStorage.getItem('token');
-    console.log('Retrieved Token:', token);
-  } catch (error) {
-    console.error('Error accessing localStorage:', error);
+  if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+    try {
+      token = localStorage.getItem('token');
+    } catch (error) {
+      console.error('Error accessing localStorage:', error);
+    }
   }
 
   if (token) {

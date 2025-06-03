@@ -18,6 +18,7 @@ import { UserProfileComponent } from './component/user-profile/user-profile.comp
 import { WishlistComponent } from './page/wishlist/wishlist.component';
 import { CartComponent } from './page/cart/cart.component';
 import { SearchComponent } from './page/search/search.component';
+import { CheckoutComponent } from './page/checkout/checkout.component';
 
 export const routes: Routes = [
   {
@@ -27,7 +28,7 @@ export const routes: Routes = [
   {
     path: 'admin/category',
     component: CategoryComponent,
-    canActivate: [adminGuard],
+    // canActivate: [adminGuard],
   },
   {
     path: 'admin/category/add',
@@ -72,7 +73,7 @@ export const routes: Routes = [
   {
     path: 'product',
     component: ProductListComponent,
-    canActivate: [adminGuard],
+    // canActivate: [adminGuard],
   },
   {
     path: 'product/:id',
@@ -108,5 +109,10 @@ export const routes: Routes = [
   {
     path: 'search',
     component: SearchComponent,
+  },
+  {
+    path: 'checkout',
+    component: CheckoutComponent,
+    canActivate: [authGuard],
   },
 ];

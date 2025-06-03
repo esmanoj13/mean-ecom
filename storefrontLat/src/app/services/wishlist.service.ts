@@ -10,7 +10,7 @@ export class WishlistService {
   constructor() {}
   http = inject(HttpClient);
   private $apiURL = environment.API_URL;
-  private wishlistSignal = signal<Product[]>([]);
+  public wishlistSignal = signal<Product[]>([]);
   loadWishlist(): void {
     this.http
       .get<Product[]>(`${this.$apiURL}/customer/wishlist`)

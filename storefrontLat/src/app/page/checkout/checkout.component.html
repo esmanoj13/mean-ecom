@@ -1,0 +1,246 @@
+<div class="flex main">
+  <div class="w-1/2 my-3 px-3">
+    <form [formGroup]="checkoutForm">
+      <!-- Name -->
+      <div class="grid grid-cols-2 gap-3">
+        <div class="mb-4">
+          <mat-form-field class="w-full">
+            <mat-label>Name</mat-label>
+            <input
+              type="text"
+              matInput
+              formControlName="name"
+              placeholder="Enter your name"
+            />
+            @if(formValidation['name'] && formValidation['name'].touched){
+            @if(formValidation['name'].errors?.['required']){
+            <mat-error>
+              <small> Name is required.</small>
+            </mat-error>
+            } @if(formValidation['name'].errors?.['minlength']){
+            <mat-error>
+              <small>Minimum 3 characters required.</small>
+            </mat-error>
+            } }
+          </mat-form-field>
+        </div>
+
+        <!-- Email -->
+        <div class="mb-4">
+          <mat-form-field class="w-full">
+            <mat-label>Email</mat-label>
+            <input
+              type="email"
+              formControlName="email"
+              matInput
+              placeholder="Enter your email"
+            />
+            @if(formValidation['email'] && formValidation['email'].touched){
+            @if(formValidation['email'].errors?.['required']){
+            <mat-error>
+              <small> email is required.</small>
+            </mat-error>
+            } @if(formValidation['email'].errors?.['email']){
+            <mat-error>
+              <small>Please enter a valid email address.</small>
+            </mat-error>
+            } }
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-3">
+        <div class="mb-6">
+          <mat-form-field class="w-full">
+            <mat-label>Address Line 1</mat-label>
+            <input
+              type="text"
+              formControlName="address1"
+              matInput
+              placeholder="Enter your Address line 1"
+            />
+            @if(formValidation['address1'] &&
+            formValidation['address1'].touched){
+            @if(formValidation['address1'].errors?.['required']){
+            <mat-error>
+              <small> Adderess1 is required.</small>
+            </mat-error>
+            }}
+          </mat-form-field>
+        </div>
+
+        <!--City -->
+        <div class="mb-6">
+          <mat-form-field class="w-full">
+            <mat-label>Address Line 2</mat-label>
+            <input
+              type="text"
+              formControlName="address2"
+              matInput
+              placeholder="Enter your Address line 2"
+            />
+            @if(formValidation['address2'] &&
+            formValidation['address2'].touched){
+            @if(formValidation['address2'].errors?.['required']){
+            <mat-error>
+              <small> Adderess 2 is required.</small>
+            </mat-error>
+            }}
+          </mat-form-field>
+        </div>
+      </div>
+      <!-- City and State -->
+      <div class="grid grid-cols-2 gap-3">
+        <div class="mb-6">
+          <mat-form-field class="w-full">
+            <mat-label>City</mat-label>
+            <input
+              type="text"
+              formControlName="city"
+              matInput
+              placeholder="Enter your Address city"
+            />
+            @if(formValidation['city'] && formValidation['city'].touched){
+            @if(formValidation['city'].errors?.['required']){
+            <mat-error>
+              <small> City is required.</small>
+            </mat-error>
+            }}
+          </mat-form-field>
+        </div>
+
+        <!--state -->
+        <div class="mb-6">
+          <mat-form-field class="w-full">
+            <mat-label>State</mat-label>
+            <input
+              type="text"
+              formControlName="state"
+              matInput
+              placeholder="Enter your state"
+            />
+            @if(formValidation['state'] && formValidation['state'].touched){
+            @if(formValidation['state'].errors?.['required']){
+            <mat-error>
+              <small>State is required.</small>
+            </mat-error>
+            }}
+          </mat-form-field>
+        </div>
+      </div>
+      <!-- Country and Contact -->
+      <div class="grid grid-cols-2 gap-3">
+        <div class="mb-6">
+          <mat-form-field class="w-full">
+            <mat-label>Country</mat-label>
+            <input
+              type="text"
+              formControlName="country"
+              matInput
+              placeholder="Enter your country"
+            />
+            @if(formValidation['country'] && formValidation['country'].touched){
+            @if(formValidation['country'].errors?.['required']){
+            <mat-error>
+              <small> Country is required.</small>
+            </mat-error>
+            }}
+          </mat-form-field>
+        </div>
+
+        <!--Contact-->
+        <div class="mb-6">
+          <mat-form-field class="w-full">
+            <mat-label>Contact</mat-label>
+            <input
+              type="text"
+              formControlName="contact"
+              matInput
+              placeholder="Enter your state"
+            />
+            @if(formValidation['contact'] && formValidation['contact'].touched){
+            @if(formValidation['contact'].errors?.['required']){
+            <mat-error>
+              <small>Contact is required.</small>
+            </mat-error>
+            }}
+          </mat-form-field>
+        </div>
+      </div>
+      <!-- Submit Button -->
+      <button
+        class="w-full"
+        mat-raised-button
+        (click)="proccedToSaveAddress()"
+        [disabled]="!this.checkoutForm.valid"
+      >
+        Submit
+      </button>
+    </form>
+    <h2 class="text-2xl my-3">Shipping Method</h2>
+    <div class="bg-gray-100 p-3 rounded-lg mb-4">
+      <p class="text-center">
+        Enter your shipping address to view available shipping methods.
+      </p>
+    </div>
+
+    <h2 class="text-2xl my-3">Payment</h2>
+    <mat-radio-group [(ngModel)]="selectedPaymentMethod" class="block my-4">
+      <mat-radio-button value="cod">Cash On Delivery</mat-radio-button>
+      <mat-radio-button value="paypal">PayPal</mat-radio-button>
+      <mat-radio-button value="creditcard">Credit Card</mat-radio-button>
+    </mat-radio-group>
+  </div>
+  <div class="w-1/2 bg-gray-100 py-2 px-3">
+    @for(item of getcartItems(); track $index){
+    <!-- Cart Items -->
+    <div class="mt-2">
+      <div class="divide-y divide-gray-200">
+        <!-- Cart Item -->
+        <div class="flex items-center p-4">
+          <div class="w-1/6">
+            <div
+              class="flex items-center space-x-4 relative bg-gray-200 shadow-md rounded-lg overflow-hidden p-2 w-fit"
+            >
+              <img
+                [src]="item.productId.image[0]"
+                [alt]="item.productId.name"
+                class="w-12 h-12 object-contain rounded-lg"
+              />
+              <div
+                class="absolute top-0 right-0 bg-gray-500 flex justify-center items-center rounded-full w-6 h-6 text-white font-semibold text-xs"
+              >
+                {{ item.quantity }}
+              </div>
+            </div>
+          </div>
+          <div class="w-2/3 ml-4">
+            <h2 class="font-semibold capitalize">
+              {{ item.productId.name }}
+            </h2>
+          </div>
+          <div class="w-1/4 text-right">
+            <p class="text-gray-500 font-bold">${{ item.productId.price }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    }
+    <hr />
+    <div class="p-3">
+      <div class="text-gray-600 flex justify-between items-center mt-2">
+        <div class="font-bold">Sub Total:</div>
+        <div class="text-right">${{ getSubTotalPrice() }}</div>
+      </div>
+      <div class="text-gray-600 flex justify-between items-center mt-2 py-2">
+        <div class="font-bold">Shipping:</div>
+        <div class="text-right">{{ getShipping() }}</div>
+      </div>
+      <hr />
+      <div class="text-gray-600 flex justify-between items-center mt-2 py-2">
+        <div class="font-bold text-2xl">Total:</div>
+        <div class="text-right font-bold text-2xl">${{ getTotalPrice() }}</div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -5,6 +5,7 @@ import {
   ViewChild,
   inject,
 } from '@angular/core';
+import { Location } from '@angular/common';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -13,6 +14,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { ProductService } from '../../../services/product.service';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-product',
@@ -23,12 +25,13 @@ import { ProductService } from '../../../services/product.service';
     MatInputModule,
     MatFormFieldModule,
     MatButtonModule,
+    MatIcon,
   ],
   templateUrl: './product.component.html',
   styleUrl: './product.component.scss',
 })
 export class ProductComponent implements AfterViewInit, OnInit {
-  constructor() {
+  constructor(private location: Location) {
     this.dataSource = new MatTableDataSource([] as any);
   }
   productService = inject(ProductService);
@@ -107,5 +110,8 @@ export class ProductComponent implements AfterViewInit, OnInit {
         console.error('Error adding brand:', err);
       },
     });
+  }
+  goBack() {
+    this.location.back();
   }
 }

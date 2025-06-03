@@ -1,5 +1,5 @@
-<div class="flex px-10 py-2">
-  <div class="w-3/12">
+<div class="flex px-10 py-2 main">
+  <div class="w-2/12">
     <h2 class="bg-slate-200 w-12 border-spacing-3 border-r-8">Filter</h2>
     <mat-form-field>
       <mat-label>Category</mat-label>
@@ -8,7 +8,7 @@
         name="categoryId"
         (selectionChange)="onCategoryChange($event.value)"
       >
-        @for(item of category; track item){
+        @for(item of categorys; track item){
         <mat-option value="{{ item._id }}">{{ item.name }}</mat-option>
         }
       </mat-select>
@@ -20,13 +20,15 @@
         name="brandId"
         (selectionChange)="onBrandChange($event.value)"
       >
-        @for(item of brand; track item){
-        <mat-option value="{{ item._id }}">{{ item.name }}</mat-option>
+        @for(item of brands; track item){
+        <mat-option class="capitalize" value="{{ item._id }}"
+          ><span class="capitalize">{{ item.name }}</span></mat-option
+        >
         }
       </mat-select>
     </mat-form-field>
   </div>
-  <div class="w-9/12">
+  <div class="w-10/12">
     <div class="flex justify-end">
       <mat-form-field>
         <mat-label>Order by</mat-label>
@@ -38,11 +40,18 @@
     </div>
     @if(products.length > 0){
     <app-product-slider
-      title="product"
+      title="{{ categoryName }}"
       [product]="products"
     ></app-product-slider>
     }@else{
-    <h1 class="text-3xl font-bold">Product is not found</h1>
+    <div class="text-center">
+      <h1 class="text-3xl font-bold">
+        Products of <span class="lowercase">{{ categoryName }} </span> are not
+        found.
+      </h1>
+      <p>Please select another category</p>
+    </div>
+
     }
   </div>
 </div>

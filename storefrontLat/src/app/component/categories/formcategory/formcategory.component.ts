@@ -19,13 +19,12 @@ export class FormcategoryComponent implements OnInit {
   name: any;
   id!: string;
   isEdit = false;
+
   ngOnInit(): void {
     this.id = this.route.snapshot.paramMap.get('id')!;
-    console.log(this.id);
     if (this.id) {
       this.isEdit = true;
       this.categoryService.editCategory(this.id).subscribe((data) => {
-        console.log(data);
         this.name = data.name;
       });
     }
@@ -34,7 +33,6 @@ export class FormcategoryComponent implements OnInit {
   addCategory() {
     this.categoryService.addCategory(this.name).subscribe({
       next: (data) => {
-        console.log('Category added successfully:', data);
         this.router.navigateByUrl('admin/category');
       },
       error: (err) => {
@@ -42,6 +40,7 @@ export class FormcategoryComponent implements OnInit {
       },
     });
   }
+
   updateCategory() {
     this.categoryService.updateCategory(this.id, this.name).subscribe({
       next: (data) => {

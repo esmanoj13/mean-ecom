@@ -3,7 +3,7 @@ import { CartService } from '../../services/cart.service';
 import { CartItem } from '../../types/data-types';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 @Component({
   selector: 'app-cart',
   standalone: true,
@@ -13,6 +13,7 @@ import { RouterLink } from '@angular/router';
 })
 export class CartComponent implements OnInit {
   cartService = inject(CartService);
+  route = inject(Router);
   cartItems: CartItem[] = [];
   quantity: number = 1;
 
@@ -42,9 +43,6 @@ export class CartComponent implements OnInit {
   removeFromCart(id: string) {
     this.cartService.removeFromCart(id);
   }
-  // getTotalItems(items: CartItem[]): number {
-  //   return items.reduce((total, item) => total + item.quantity, 0);
-  // }
   // Calculate total price
   getSubTotalPrice() {
     return this.cartService
@@ -56,5 +54,8 @@ export class CartComponent implements OnInit {
   }
   getTotalPrice(): number {
     return this.getSubTotalPrice() + this.getShipping();
+  }
+  proceedToCheckout() {
+    this.route.navigateByUrl('/checkout');
   }
 }

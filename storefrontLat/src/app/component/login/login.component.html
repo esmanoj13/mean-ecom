@@ -1,5 +1,5 @@
-<div class="flex items-center justify-center flex-col mt-5">
-  <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-sm">
+<div class="flex items-center justify-center flex-col main">
+  <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-sm my-5">
     <h2 class="text-2xl font-bold text-gray-700 text-center mb-6">Login</h2>
     <form [formGroup]="loginForm">
       <!-- Email -->
@@ -62,9 +62,13 @@
       <mat-error class="mt-2 text-xs">
         {{ errorMessage }}
       </mat-error>
-      <div class="d-flex justify-center items-center pt-2">
-        Not have an account
-        <button class="underline" (click)="register()">Register</button>
+      <div class="flex justify-center items-center pt-2">
+        Don't have an account &nbsp;<button
+          class="underline text-red-500"
+          (click)="register()"
+        >
+          Get in touch
+        </button>
       </div>
     </form>
   </div>

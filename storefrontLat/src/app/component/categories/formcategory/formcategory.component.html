@@ -1,31 +1,33 @@
-<div class="flex flex-col justify-center items-center w-full">
-  @if(isEdit){
-  <h2 class="text-3xl font-bold">Update category</h2>
-  } @else{
-  <h2 class="text-3xl font-bold">Add new category</h2>
-  }
+<div class="main">
+  <div class="flex flex-col justify-center items-center w-full">
+    @if(isEdit){
+    <h2 class="text-3xl font-bold">Update category</h2>
+    } @else{
+    <h2 class="text-3xl font-bold">Add new category</h2>
+    }
 
-  <form class="w-full mt-4">
-    <div class="flex justify-center items-center">
-      <div class="w-auto">
-        <mat-form-field class="">
-          <mat-label>category</mat-label>
-          <input
-            type="text"
-            matInput
-            placeholder="Mobile"
-            [(ngModel)]="name"
-            name="name"
-          />
-        </mat-form-field>
+    <form class="w-full mt-4">
+      <div class="flex justify-center items-center">
+        <div class="w-auto">
+          <mat-form-field class="">
+            <mat-label>Category</mat-label>
+            <input
+              type="text"
+              matInput
+              placeholder="Mobile"
+              [(ngModel)]="name"
+              name="name"
+            />
+          </mat-form-field>
+        </div>
       </div>
-    </div>
-  </form>
-  @if(isEdit){
-  <button mat-raised-button (click)="updateCategory()">Update</button>
-  }@else {
-  <button mat-raised-button (click)="addCategory()" [disabled]="!name">
-    Add
-  </button>
-  }
+    </form>
+    @if(isEdit){
+    <button mat-raised-button (click)="updateCategory()">Update</button>
+    }@else {
+    <button mat-raised-button (click)="addCategory()" [disabled]="!name">
+      Add
+    </button>
+    }
+  </div>
 </div>

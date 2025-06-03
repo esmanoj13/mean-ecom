@@ -9,7 +9,7 @@ import { CartItem, Product } from '../types/data-types';
 export class CartService {
   http = inject(HttpClient);
   private $apiURL = environment.API_URL;
-  private cartSignal = signal<CartItem[]>([]);
+  public cartSignal = signal<CartItem[]>([]);
   constructor() {}
   loadcart(): void {
     this.http
@@ -59,12 +59,6 @@ export class CartService {
       this.loadcart();
     }
   }
-  // addToCartItems(id: string, quantity: number) {
-  //   return this.http.post<CartItem>(`${this.$apiURL}/customer/cart/${id}`, {
-  //     quantity: quantity,
-  //   });
-  // }
-
   removeFromCart(id: string) {
     this.http
       .delete<CartItem>(`${this.$apiURL}/customer/cart/${id}`)

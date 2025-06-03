@@ -12,12 +12,12 @@ export class AllproductsService {
   constructor() {}
   getNewProducts() {
     // console.log('new token token:');
-    return this.http.get<Product[]>(`${this.$apiURL}/customer/new-products`);
+    return this.http.get<Product[]>(`${this.$apiURL}/product/new-products`);
   }
   getFeaturedProducts() {
     // console.log('featured token:');
     return this.http.get<Product[]>(
-      `${this.$apiURL}/customer/featured-products`
+      `${this.$apiURL}/product/featured-products`
     );
   }
   getcategories() {
@@ -36,7 +36,7 @@ export class AllproductsService {
     pageSize: Number
   ) {
     return this.http.get<Product[]>(
-      `${this.$apiURL}/customer?searchTerm=${searchTerm}&categoryId=${categoryId}&brandId=${brandId}&sortBy=${sortBy}&sortOrder=${sortOrder}&page=${page}&pageSize=${pageSize}`
+      `${this.$apiURL}/product?searchTerm=${searchTerm}&categoryId=${categoryId}&brandId=${brandId}&sortBy=${sortBy}&sortOrder=${sortOrder}&page=${page}&pageSize=${pageSize}`
     );
   }
 }

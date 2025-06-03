@@ -1,7 +1,6 @@
 <div class="flex px-10 py-2 mt-3">
-  <div class="w-3/12">
+  <div class="w-2/12">
     <h2 class="w-12 mb-3 text-2xl font-semibold">Filters</h2>
-
     <mat-form-field>
       <mat-label>Category</mat-label>
       <mat-select
@@ -27,7 +26,7 @@
       </mat-select>
     </mat-form-field>
   </div>
-  <div class="w-9/12">
+  <div class="w-10/12">
     <div class="flex justify-end">
       <mat-form-field>
         <mat-label>Order by</mat-label>
@@ -43,10 +42,12 @@
       [product]="products"
     ></app-product-slider>
     }@else{
-    <h1 class="text-3xl font-bold">
-      No result found for
-      <span class="text-red-700 capitalize">{{ searchTerm }}</span>
-    </h1>
+    <div class="text-center">
+      <h1 class="text-3xl font-bold">
+        No result found for
+        <span class="text-red-700 capitalize">{{ searchTerm }}</span>
+      </h1>
+    </div>
     }
   </div>
 </div>

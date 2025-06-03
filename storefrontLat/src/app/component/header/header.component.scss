@@ -6,6 +6,11 @@ $link-hover-color: #febd69;
 
 .header-container {
   font-family: Arial, sans-serif;
+  position: fixed;
+  width: 100%;
+  z-index: 1000;
+  background-color: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   .top-bar {
     display: flex;
     justify-content: space-between;

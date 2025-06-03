@@ -6,6 +6,7 @@ import {
   importProvidersFrom,
   inject,
 } from '@angular/core';
+import { Location } from '@angular/common';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -14,6 +15,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { BrandService } from '../../../services/brand.service';
+import { MatIcon } from '@angular/material/icon';
 @Component({
   selector: 'app-brand',
   standalone: true,
@@ -24,12 +26,13 @@ import { BrandService } from '../../../services/brand.service';
     MatSortModule,
     MatPaginatorModule,
     MatButtonModule,
+    MatIcon,
   ],
   templateUrl: './brand.component.html',
   styleUrl: './brand.component.scss',
 })
 export class BrandComponent implements AfterViewInit, OnInit {
-  constructor() {
+  constructor(private location: Location) {
     this.dataSource = new MatTableDataSource([] as any);
   }
   brandService = inject(BrandService);
@@ -91,5 +94,8 @@ export class BrandComponent implements AfterViewInit, OnInit {
         console.error('Error updating brand:', err);
       },
     });
+  }
+  goBack() {
+    this.location.back();
   }
 }

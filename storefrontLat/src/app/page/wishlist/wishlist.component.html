@@ -1,17 +1,19 @@
-@if(wishlistItems().length){
-<app-product-slider
-  title="Wishlist"
-  [product]="wishlistItems()"
-></app-product-slider>
-}@else{
-<div class="flex justify-center flex-col items-center m-4 h-96">
-  <h1 class="text-3xl font-bold p-3">Your wishlist is empty</h1>
-  <p>Add Product in wishlist</p>
-  <button
-    class="px-4 py-2 bg-black text-white rounded-lg shadow-md hover:bg-gray-700 transition w-fit mt-3"
-    routerLink="/"
-  >
-    Home
-  </button>
+<div class="main">
+  @if(wishlistItems().length){
+  <app-product-slider
+    title="Wishlist"
+    [product]="wishlistItems()"
+  ></app-product-slider>
+  }@else{
+  <div class="flex justify-center flex-col items-center m-4 h-96">
+    <h1 class="text-3xl font-bold p-3">Your wishlist is empty</h1>
+    <p>Add Product in wishlist</p>
+    <button
+      class="px-4 py-2 bg-black text-white rounded-lg shadow-md hover:bg-gray-700 transition w-fit mt-3"
+      routerLink="/"
+    >
+      Home
+    </button>
+  </div>
+  }
 </div>
-}

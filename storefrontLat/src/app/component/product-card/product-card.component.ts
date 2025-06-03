@@ -6,6 +6,7 @@ import { Product } from '../../types/data-types';
 import { Router } from '@angular/router';
 import { WishlistService } from '../../services/wishlist.service';
 import { CartService } from '../../services/cart.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-product-card',
@@ -22,7 +23,7 @@ export class ProductCardComponent implements OnInit {
   finalPrice: any;
   wishlistService = inject(WishlistService);
   cartService = inject(CartService);
-
+  authService = inject(AuthService);
   ngOnInit(): void {
     this.getWishList();
     // this.getCartList();
@@ -40,7 +41,12 @@ export class ProductCardComponent implements OnInit {
     return this.wishlistService.isInWishlist(product._id);
   }
   toggleWishlist(product: Product) {
-    this.wishlistService.toogleWishlist(product);
+    if (!this.authService.loggedIn) {
+      this.router.navigate(['/login']);
+      return;
+    } else {
+      this.wishlistService.toogleWishlist(product);
+    }
   }
   // This is to get the cart details
   getCartList() {

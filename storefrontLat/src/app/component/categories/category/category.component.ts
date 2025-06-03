@@ -5,6 +5,7 @@ import {
   ViewChild,
   inject,
 } from '@angular/core';
+import { Location } from '@angular/common';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -13,6 +14,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { CategoryService } from '../../../services/category.service';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-category',
@@ -24,6 +26,7 @@ import { Router } from '@angular/router';
     MatSortModule,
     MatPaginatorModule,
     MatButtonModule,
+    MatIcon,
   ],
   templateUrl: './category.component.html',
   styleUrl: './category.component.scss',
@@ -39,7 +42,7 @@ export class CategoryComponent implements AfterViewInit, OnInit {
   @ViewChild(MatSort)
   sort!: MatSort;
 
-  constructor() {
+  constructor(private location: Location) {
     this.dataSource = new MatTableDataSource([] as any);
   }
   ngOnInit(): void {
@@ -95,5 +98,8 @@ export class CategoryComponent implements AfterViewInit, OnInit {
         console.error('Error updating category:', err);
       },
     });
+  }
+  goBack() {
+    this.location.back();
   }
 }

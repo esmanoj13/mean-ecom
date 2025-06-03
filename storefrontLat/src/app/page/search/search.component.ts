@@ -41,8 +41,6 @@ export class SearchComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe((params) => {
       this.searchTerm = params['search'] || '';
-      this.categoryId = params['categoryId'] || '';
-      this.brandId = params['brandId'] || '';
       this.getsearchProducts();
     });
 
@@ -68,7 +66,6 @@ export class SearchComponent implements OnInit {
         .subscribe({
           next: (data) => {
             this.products = data;
-            console.log('product-list-this.products', this.products);
           },
           error: (err) => {
             console.error('Error fetching search products:', err);

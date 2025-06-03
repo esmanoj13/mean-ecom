@@ -5,5 +5,14 @@
 @import "ngx-owl-carousel-o/lib/styles/scss/owl.carousel";
 @import "ngx-owl-carousel-o/lib/styles/scss/owl.theme.default";
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+.main {
+  padding-top: 96px;
+}

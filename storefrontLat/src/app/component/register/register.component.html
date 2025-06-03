@@ -1,83 +1,198 @@
-<div class="flex items-center justify-center flex-col mt-5">
-  <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-sm">
+<div class="flex items-center justify-center flex-col my-5 main">
+  <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-2xl">
     <h2 class="text-2xl font-bold text-gray-700 text-center mb-6">Sign Up</h2>
     <form [formGroup]="registerForm">
       <!-- Name -->
-      <div class="mb-4">
-        <mat-form-field class="w-full">
-          <mat-label>Name</mat-label>
-          <input
-            type="text"
-            matInput
-            formControlName="name"
-            placeholder="Enter your name"
-          />
-          @if(formValidation['name'] && formValidation['name'].touched){
-          @if(formValidation['name'].errors?.['required']){
-          <mat-error>
-            <small> Name is required.</small>
-          </mat-error>
-          } @if(formValidation['name'].errors?.['minlength']){
-          <mat-error>
-            <small>Minimum 3 characters required.</small>
-          </mat-error>
-          } }
-        </mat-form-field>
-      </div>
+      <div class="grid grid-cols-2 gap-3">
+        <div class="mb-4">
+          <mat-form-field class="w-full">
+            <mat-label>Name</mat-label>
+            <input
+              type="text"
+              matInput
+              formControlName="name"
+              placeholder="Enter your name"
+            />
+            @if(formValidation['name'] && formValidation['name'].touched){
+            @if(formValidation['name'].errors?.['required']){
+            <mat-error>
+              <small> Name is required.</small>
+            </mat-error>
+            } @if(formValidation['name'].errors?.['minlength']){
+            <mat-error>
+              <small>Minimum 3 characters required.</small>
+            </mat-error>
+            } }
+          </mat-form-field>
+        </div>
 
-      <!-- Email -->
-      <div class="mb-4">
-        <mat-form-field class="w-full">
-          <mat-label>Email</mat-label>
-          <input
-            type="email"
-            formControlName="email"
-            matInput
-            placeholder="Enter your email"
-          />
-          @if(formValidation['email'] && formValidation['email'].touched){
-          @if(formValidation['email'].errors?.['required']){
-          <mat-error>
-            <small> email is required.</small>
-          </mat-error>
-          } @if(formValidation['email'].errors?.['email']){
-          <mat-error>
-            <small>Please enter a valid email address.</small>
-          </mat-error>
-          } }
-        </mat-form-field>
+        <!-- Email -->
+        <div class="mb-4">
+          <mat-form-field class="w-full">
+            <mat-label>Email</mat-label>
+            <input
+              type="email"
+              formControlName="email"
+              matInput
+              placeholder="Enter your email"
+            />
+            @if(formValidation['email'] && formValidation['email'].touched){
+            @if(formValidation['email'].errors?.['required']){
+            <mat-error>
+              <small> email is required.</small>
+            </mat-error>
+            } @if(formValidation['email'].errors?.['email']){
+            <mat-error>
+              <small>Please enter a valid email address.</small>
+            </mat-error>
+            } }
+          </mat-form-field>
+        </div>
       </div>
-
       <!-- Password -->
-      <div class="mb-6">
-        <mat-form-field class="w-full">
-          <mat-label>Password</mat-label>
-          <input
-            type="password"
-            formControlName="password"
-            matInput
-            placeholder="Enter your password"
-          />
-          @if(formValidation['password'] && formValidation['password'].touched){
-          @if(formValidation['email'].errors?.['required']){
-          <mat-error>
-            <small> Password is required.</small>
-          </mat-error>
-          } @if(formValidation['password'].errors?.['minlength']){
-          <mat-error>
-            <small>Password must be at least 8 characters long. </small>
-          </mat-error>
-          } @if(formValidation['password'].errors?.['pattern']){
-          <mat-error>
-            <small
-              >Password must contain at least one uppercase letter and one
-              special character.</small
-            >
-          </mat-error>
-          } }
-        </mat-form-field>
+      <div class="grid grid-cols-2 gap-3">
+        <div class="mb-6">
+          <mat-form-field class="w-full">
+            <mat-label>Password</mat-label>
+            <input
+              type="password"
+              formControlName="password"
+              matInput
+              placeholder="Enter your password"
+            />
+            @if(formValidation['password'] &&
+            formValidation['password'].touched){
+            @if(formValidation['email'].errors?.['required']){
+            <mat-error>
+              <small> Password is required.</small>
+            </mat-error>
+            } @if(formValidation['password'].errors?.['minlength']){
+            <mat-error>
+              <small>Password must be at least 8 characters long. </small>
+            </mat-error>
+            } @if(formValidation['password'].errors?.['pattern']){
+            <mat-error>
+              <small
+                >Password must contain at least one uppercase letter and one
+                special character.</small
+              >
+            </mat-error>
+            } }
+          </mat-form-field>
+        </div>
+
+        <!--Confirm  Password -->
+        <div class="mb-6">
+          <mat-form-field class="w-full">
+            <mat-label>Confirm Password</mat-label>
+            <input
+              type="password"
+              formControlName="password"
+              matInput
+              placeholder="Enter your password"
+            />
+            @if(formValidation['password'] &&
+            formValidation['password'].touched){
+            @if(formValidation['email'].errors?.['required']){
+            <mat-error>
+              <small> Password is required.</small>
+            </mat-error>
+            } @if(formValidation['password'].errors?.['minlength']){
+            <mat-error>
+              <small>Password must be at least 8 characters long. </small>
+            </mat-error>
+            } @if(formValidation['password'].errors?.['pattern']){
+            <mat-error>
+              <small
+                >Password must contain at least one uppercase letter and one
+                special character.</small
+              >
+            </mat-error>
+            } }
+          </mat-form-field>
+        </div>
       </div>
 
+      <div class="grid grid-cols-2 gap-3">
+        <div class="mb-6">
+          <mat-form-field class="w-full">
+            <mat-label>Address Line 1</mat-label>
+            <input
+              type="text"
+              formControlName="password"
+              matInput
+              placeholder="Enter your Address line 1"
+            />
+            @if(formValidation['password'] &&
+            formValidation['password'].touched){
+            @if(formValidation['email'].errors?.['required']){
+            <mat-error>
+              <small> Adderess is required.</small>
+            </mat-error>
+            }}
+          </mat-form-field>
+        </div>
+
+        <!--Confirm  Password -->
+        <div class="mb-6">
+          <mat-form-field class="w-full">
+            <mat-label>Address Line 2</mat-label>
+            <input
+              type="text"
+              formControlName="password"
+              matInput
+              placeholder="Enter your Address line 2"
+            />
+            @if(formValidation['password'] &&
+            formValidation['password'].touched){
+            @if(formValidation['email'].errors?.['required']){
+            <mat-error>
+              <small> Adderess 2 is required.</small>
+            </mat-error>
+            }}
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="grid grid-cols-2 gap-3">
+        <div class="mb-6">
+          <mat-form-field class="w-full">
+            <mat-label>City</mat-label>
+            <input
+              type="text"
+              formControlName="city"
+              matInput
+              placeholder="Enter your Address city"
+            />
+            @if(formValidation['password'] &&
+            formValidation['password'].touched){
+            @if(formValidation['email'].errors?.['required']){
+            <mat-error>
+              <small> City is required.</small>
+            </mat-error>
+            }}
+          </mat-form-field>
+        </div>
+
+        <!--Confirm  Password -->
+        <div class="mb-6">
+          <mat-form-field class="w-full">
+            <mat-label>State</mat-label>
+            <input
+              type="text"
+              formControlName="state"
+              matInput
+              placeholder="Enter your state"
+            />
+            @if(formValidation['password'] &&
+            formValidation['password'].touched){
+            @if(formValidation['email'].errors?.['required']){
+            <mat-error>
+              <small>State is required.</small>
+            </mat-error>
+            }}
+          </mat-form-field>
+        </div>
+      </div>
       <!-- Submit Button -->
       <button
         class="w-full"
@@ -87,10 +202,14 @@
       >
         Submit
       </button>
+      <div class="flex justify-center items-center pt-2">
+        Already have an account &nbsp;<button
+          class="underline text-red-500"
+          (click)="login()"
+        >
+          Login
+        </button>
+      </div>
     </form>
-  </div>
-  <div class="d-flex justify-center items-center pt-2">
-    Already have an account
-    <button class="underline" (click)="login()">Login</button>
   </div>
 </div>
