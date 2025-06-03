@@ -90,7 +90,6 @@ export class SearchComponent implements OnInit {
 
   orderby(event: any) {
     this.sortBy = 'price';
-    console.log(event);
     this.sortOrder = event;
     this.getsearchProducts();
   }

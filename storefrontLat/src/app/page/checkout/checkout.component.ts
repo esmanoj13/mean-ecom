@@ -33,8 +33,8 @@ export class CheckoutComponent implements OnInit {
   checkoutForm = this.fb.group({
     name: ['', [Validators.required, Validators.minLength(5)]],
     email: ['', [Validators.required, Validators.email]],
-    address1: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
-    address2: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
+    address1: ['', [Validators.required]],
+    address2: ['', [Validators.required]],
     city: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
     state: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
     country: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],

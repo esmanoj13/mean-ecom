@@ -35,7 +35,7 @@ export class ProductComponent implements AfterViewInit, OnInit {
     this.dataSource = new MatTableDataSource([] as any);
   }
   productService = inject(ProductService);
-  route = inject(Router);
+  router = inject(Router);
   displayedColumns: string[] = [
     'id',
     'image',
@@ -73,7 +73,7 @@ export class ProductComponent implements AfterViewInit, OnInit {
   }
 
   getProductForm() {
-    this.route.navigate(['admin/product/add']);
+    this.router.navigate(['admin/product/add']);
   }
 
   productlist() {
@@ -92,7 +92,7 @@ export class ProductComponent implements AfterViewInit, OnInit {
     this.productService.editProduct(id).subscribe({
       next: (data: any) => {
         console.log('update product:', data._id);
-        this.route.navigateByUrl(`admin/product/${data._id}`);
+        this.router.navigateByUrl(`admin/product/${data._id}`);
       },
       error(err: any) {
         console.error('Error updating brand:', err);
@@ -112,6 +112,7 @@ export class ProductComponent implements AfterViewInit, OnInit {
     });
   }
   goBack() {
-    this.location.back();
+    this.router.navigateByUrl('/dashboard');
+    // this.location.back();
   }
 }

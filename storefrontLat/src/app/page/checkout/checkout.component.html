@@ -151,21 +151,46 @@
         <!--Contact-->
         <div class="mb-6">
           <mat-form-field class="w-full">
-            <mat-label>Contact</mat-label>
+            <mat-label>Pincode</mat-label>
             <input
               type="text"
-              formControlName="contact"
+              formControlName="pincode"
               matInput
-              placeholder="Enter your state"
+              placeholder="Enter your area pincode"
             />
-            @if(formValidation['contact'] && formValidation['contact'].touched){
-            @if(formValidation['contact'].errors?.['required']){
+            @if(formValidation['pincode'] && formValidation['pincode'].touched){
+            @if(formValidation['pincode'].errors?.['required']){
             <mat-error>
-              <small>Contact is required.</small>
+              <small>Pincode is required.</small>
+            </mat-error>
+            } @if(formValidation['pincode'].errors?.['pattern']){
+            <mat-error>
+              <small> please use number only.</small>
             </mat-error>
             }}
           </mat-form-field>
         </div>
+      </div>
+      <div class="mb-6">
+        <mat-form-field class="w-full">
+          <mat-label>Contact</mat-label>
+          <input
+            type="text"
+            formControlName="contact"
+            matInput
+            placeholder="Enter your area pincode"
+          />
+          @if(formValidation['contact'] && formValidation['contact'].touched){
+          @if(formValidation['contact'].errors?.['required']){
+          <mat-error>
+            <small>Contact is required.</small>
+          </mat-error>
+          } @if(formValidation['contact'].errors?.['pattern']){
+          <mat-error>
+            <small> please use number only.</small>
+          </mat-error>
+          }}
+        </mat-form-field>
       </div>
       <!-- Submit Button -->
       <button

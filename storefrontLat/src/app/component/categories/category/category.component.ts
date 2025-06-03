@@ -100,6 +100,7 @@ export class CategoryComponent implements AfterViewInit, OnInit {
     });
   }
   goBack() {
-    this.location.back();
+    this.router.navigateByUrl('/dashboard');
+    // this.location.back();
   }
 }

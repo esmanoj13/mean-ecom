@@ -96,6 +96,7 @@ export class BrandComponent implements AfterViewInit, OnInit {
     });
   }
   goBack() {
-    this.location.back();
+    this.router.navigateByUrl('/dashboard');
+    // this.location.back();
   }
 }

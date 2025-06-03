@@ -1,53 +1,60 @@
-<div class="flex px-10 py-2 mt-3">
-  <div class="w-2/12">
-    <h2 class="w-12 mb-3 text-2xl font-semibold">Filters</h2>
-    <mat-form-field>
-      <mat-label>Category</mat-label>
-      <mat-select
-        [(ngModel)]="categoryId"
-        name="categoryId"
-        (selectionChange)="onCategoryChange($event.value)"
-      >
-        @for(item of category; track item){
-        <mat-option value="{{ item._id }}">{{ item.name }}</mat-option>
-        }
-      </mat-select>
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Brand</mat-label>
-      <mat-select
-        [(ngModel)]="brandId"
-        name="brandId"
-        (selectionChange)="onBrandChange($event.value)"
-      >
-        @for(item of brand; track item){
-        <mat-option value="{{ item._id }}">{{ item.name }}</mat-option>
-        }
-      </mat-select>
-    </mat-form-field>
-  </div>
-  <div class="w-10/12">
-    <div class="flex justify-end">
+<div class="main">
+  @if(products.length > 0){
+  <div class="flex px-10 py-2 mt-3">
+    <div class="w-2/12">
+      <h2 class="w-12 mb-3 text-2xl font-semibold">Filters</h2>
       <mat-form-field>
-        <mat-label>Order by</mat-label>
-        <mat-select name="categoryId" (selectionChange)="orderby($event.value)">
-          <mat-option value="-1">Price high to low</mat-option>
-          <mat-option value="1">Price low to high</mat-option>
+        <mat-label>Category</mat-label>
+        <mat-select
+          [(ngModel)]="categoryId"
+          name="categoryId"
+          (selectionChange)="onCategoryChange($event.value)"
+        >
+          @for(item of category; track item){
+          <mat-option value="{{ item._id }}">{{ item.name }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Brand</mat-label>
+        <mat-select
+          [(ngModel)]="brandId"
+          name="brandId"
+          (selectionChange)="onBrandChange($event.value)"
+        >
+          @for(item of brand; track item){
+          <mat-option value="{{ item._id }}">{{ item.name }}</mat-option>
+          }
         </mat-select>
       </mat-form-field>
     </div>
-    @if(products.length > 0){
-    <app-product-slider
-      title="Search Results for {{ searchTerm }}"
-      [product]="products"
-    ></app-product-slider>
-    }@else{
-    <div class="text-center">
-      <h1 class="text-3xl font-bold">
-        No result found for
-        <span class="text-red-700 capitalize">{{ searchTerm }}</span>
-      </h1>
+    <div class="w-10/12">
+      <div class="flex justify-end">
+        <mat-form-field>
+          <mat-label>Order by</mat-label>
+          <mat-select
+            name="categoryId"
+            (selectionChange)="orderby($event.value)"
+          >
+            <mat-option value="-1">Price high to low</mat-option>
+            <mat-option value="1">Price low to high</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <app-product-slider
+        title="Search Results for {{ searchTerm }}"
+        [product]="products"
+      ></app-product-slider>
     </div>
-    }
   </div>
+  }@else{
+  <div class="text-center h-64 flex items-center justify-center flex-col">
+    <h1 class="text-3xl font-bold">
+      No result found for
+      <span class="text-red-700 capitalize">{{ searchTerm }}</span>
+    </h1>
+    <p>Please select other category</p>
+  </div>
+  }
 </div>
