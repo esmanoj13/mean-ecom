@@ -9,6 +9,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { CartService } from '../../services/cart.service';
+import { MatIcon } from '@angular/material/icon';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-checkout',
@@ -19,11 +21,14 @@ import { CartService } from '../../services/cart.service';
     ReactiveFormsModule,
     MatRadioModule,
     FormsModule,
+    MatIcon,
   ],
   templateUrl: './checkout.component.html',
   styleUrl: './checkout.component.scss',
 })
 export class CheckoutComponent implements OnInit {
+  ecommCompany: string = 'EasyMart';
+  router = inject(Router);
   ngOnInit(): void {
     this.cartService.loadcart();
   }
@@ -58,5 +63,8 @@ export class CheckoutComponent implements OnInit {
   }
   getTotalPrice(): number {
     return this.getSubTotalPrice() + this.getShipping();
+  }
+  openCart() {
+    this.router.navigateByUrl('/cart');
   }
 }

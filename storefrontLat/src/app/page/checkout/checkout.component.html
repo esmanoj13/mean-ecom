@@ -1,4 +1,23 @@
-<div class="flex main">
+<div
+  class="checout-header flex justify-between items-center p-4 bg-white shadow-md"
+>
+  <div class="logo">
+    <a routerLink="/">
+      <img src="assets/images/logo.webp" alt="logo" />
+    </a>
+  </div>
+  <div class="cartIcon">
+    <button
+      class="icon-button"
+      aria-label="Cart"
+      (click)="openCart()"
+      class="flex items-center justify-center"
+    >
+      <mat-icon class="text-blue-500">shopping_cart</mat-icon>
+    </button>
+  </div>
+</div>
+<div class="flex mt-3">
   <div class="w-1/2 my-3 px-3">
     <form [formGroup]="checkoutForm">
       <!-- Name -->

@@ -26,6 +26,14 @@ export class RegisterComponent {
         Validators.pattern(/^(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>]).+$/),
       ],
     ],
+
+    address1: ['', [Validators.required]],
+    address2: ['', [Validators.required]],
+    city: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
+    state: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
+    country: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
+    pincode: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
+    contact: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
   });
   get formValidation() {
     return this.registerForm.controls;

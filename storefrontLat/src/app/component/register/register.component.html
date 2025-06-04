@@ -1,4 +1,13 @@
-<div class="flex items-center justify-center flex-col my-5 main">
+<div
+  class="checout-header flex justify-between items-center p-4 bg-white shadow-md"
+>
+  <div class="logo">
+    <a routerLink="/">
+      <img src="\assets\images\logo.webp" alt="logo" />
+    </a>
+  </div>
+</div>
+<div class="flex items-center justify-center flex-col my-5">
   <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-2xl">
     <h2 class="text-2xl font-bold text-gray-700 text-center mb-6">Sign Up</h2>
     <form [formGroup]="registerForm">
@@ -192,6 +201,71 @@
             }}
           </mat-form-field>
         </div>
+      </div>
+
+      <!-- Country and Contact -->
+      <div class="grid grid-cols-2 gap-3">
+        <div class="mb-6">
+          <mat-form-field class="w-full">
+            <mat-label>Country</mat-label>
+            <input
+              type="text"
+              formControlName="country"
+              matInput
+              placeholder="Enter your country"
+            />
+            @if(formValidation['country'] && formValidation['country'].touched){
+            @if(formValidation['country'].errors?.['required']){
+            <mat-error>
+              <small> Country is required.</small>
+            </mat-error>
+            }}
+          </mat-form-field>
+        </div>
+
+        <!--Contact-->
+        <div class="mb-6">
+          <mat-form-field class="w-full">
+            <mat-label>Pincode</mat-label>
+            <input
+              type="text"
+              formControlName="pincode"
+              matInput
+              placeholder="Enter your area pincode"
+            />
+            @if(formValidation['pincode'] && formValidation['pincode'].touched){
+            @if(formValidation['pincode'].errors?.['required']){
+            <mat-error>
+              <small>Pincode is required.</small>
+            </mat-error>
+            } @if(formValidation['pincode'].errors?.['pattern']){
+            <mat-error>
+              <small> please use number only.</small>
+            </mat-error>
+            }}
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="mb-6">
+        <mat-form-field class="w-full">
+          <mat-label>Contact</mat-label>
+          <input
+            type="text"
+            formControlName="contact"
+            matInput
+            placeholder="Enter your area pincode"
+          />
+          @if(formValidation['contact'] && formValidation['contact'].touched){
+          @if(formValidation['contact'].errors?.['required']){
+          <mat-error>
+            <small>Contact is required.</small>
+          </mat-error>
+          } @if(formValidation['contact'].errors?.['pattern']){
+          <mat-error>
+            <small> please use number only.</small>
+          </mat-error>
+          }}
+        </mat-form-field>
       </div>
       <!-- Submit Button -->
       <button

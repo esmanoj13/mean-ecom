@@ -19,100 +19,114 @@ import { WishlistComponent } from './page/wishlist/wishlist.component';
 import { CartComponent } from './page/cart/cart.component';
 import { SearchComponent } from './page/search/search.component';
 import { CheckoutComponent } from './page/checkout/checkout.component';
+import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
+import { BlankLayoutComponent } from './layouts/blank-layout/blank-layout.component';
 
 export const routes: Routes = [
   {
     path: '',
-    component: HomeComponent,
+    component: MainLayoutComponent,
+    children: [
+      {
+        path: '',
+        component: HomeComponent,
+      },
+      {
+        path: 'admin/category',
+        component: CategoryComponent,
+        // canActivate: [adminGuard],
+      },
+      {
+        path: 'cart',
+        component: CartComponent,
+      },
+      {
+        path: 'admin/category/add',
+        component: FormcategoryComponent,
+        canActivate: [adminGuard],
+      },
+      {
+        path: 'admin/category/:id',
+        component: FormcategoryComponent,
+        canActivate: [adminGuard],
+      },
+      {
+        path: 'admin/brand',
+        component: BrandComponent,
+        canActivate: [adminGuard],
+      },
+      {
+        path: 'admin/brand/add',
+        component: FormbrandComponent,
+        canActivate: [adminGuard],
+      },
+      {
+        path: 'admin/brand/:id',
+        component: FormbrandComponent,
+        canActivate: [adminGuard],
+      },
+      {
+        path: 'admin/product',
+        component: ProductComponent,
+        canActivate: [adminGuard],
+      },
+      {
+        path: 'admin/product/add',
+        component: FormproductComponent,
+        canActivate: [adminGuard],
+      },
+      {
+        path: 'admin/product/:id',
+        component: FormproductComponent,
+        canActivate: [adminGuard],
+      },
+      {
+        path: 'product',
+        component: ProductListComponent,
+        // canActivate: [adminGuard],
+      },
+      {
+        path: 'product/:id',
+        component: ProductDisplayComponent,
+        canActivate: [adminGuard],
+      },
+      {
+        path: 'wishlist',
+        component: WishlistComponent,
+      },
+      {
+        path: 'dashboard',
+        component: DashboardComponent,
+        canActivate: [adminGuard],
+      },
+      {
+        path: 'user-profile',
+        component: UserProfileComponent,
+        canActivate: [authGuard],
+      },
+      {
+        path: 'search',
+        component: SearchComponent,
+      },
+    ],
   },
   {
-    path: 'admin/category',
-    component: CategoryComponent,
-    // canActivate: [adminGuard],
-  },
-  {
-    path: 'admin/category/add',
-    component: FormcategoryComponent,
-    canActivate: [adminGuard],
-  },
-  {
-    path: 'admin/category/:id',
-    component: FormcategoryComponent,
-    canActivate: [adminGuard],
-  },
-  {
-    path: 'admin/brand',
-    component: BrandComponent,
-    canActivate: [adminGuard],
-  },
-  {
-    path: 'admin/brand/add',
-    component: FormbrandComponent,
-    canActivate: [adminGuard],
-  },
-  {
-    path: 'admin/brand/:id',
-    component: FormbrandComponent,
-    canActivate: [adminGuard],
-  },
-  {
-    path: 'admin/product',
-    component: ProductComponent,
-    canActivate: [adminGuard],
-  },
-  {
-    path: 'admin/product/add',
-    component: FormproductComponent,
-    canActivate: [adminGuard],
-  },
-  {
-    path: 'admin/product/:id',
-    component: FormproductComponent,
-    canActivate: [adminGuard],
-  },
-  {
-    path: 'product',
-    component: ProductListComponent,
-    // canActivate: [adminGuard],
-  },
-  {
-    path: 'product/:id',
-    component: ProductDisplayComponent,
-    canActivate: [adminGuard],
-  },
-  {
-    path: 'wishlist',
-    component: WishlistComponent,
-  },
-  {
-    path: 'register',
-    component: RegisterComponent,
-  },
-  {
-    path: 'login',
-    component: LoginComponent,
-  },
-  {
-    path: 'cart',
-    component: CartComponent,
-  },
-  {
-    path: 'dashboard',
-    component: DashboardComponent,
-    canActivate: [adminGuard],
-  },
-  {
-    path: 'user-profile',
-    component: UserProfileComponent,
-    canActivate: [authGuard],
-  },
-  {
-    path: 'search',
-    component: SearchComponent,
-  },
-  {
-    path: 'checkout',
-    component: CheckoutComponent,
-    canActivate: [authGuard],
+    path: '',
+    component: BlankLayoutComponent,
+    children: [
+      {
+        path: 'checkout',
+        component: CheckoutComponent,
+        canActivate: [authGuard],
+      },
+      {
+        path: 'register',
+        component: RegisterComponent,
+      },
+      {
+        path: 'login',
+        component: LoginComponent,
+      },
+    ],
   },
 ];
