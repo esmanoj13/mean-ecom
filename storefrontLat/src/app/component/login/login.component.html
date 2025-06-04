@@ -1,4 +1,13 @@
-<div class="flex items-center justify-center flex-col main">
+<div
+  class="checout-header flex justify-center items-center p-4 bg-white shadow-md"
+>
+  <div class="logo">
+    <a routerLink="/">
+      <img src="images/logo.webp" alt="logo" width="150" height="50" />
+    </a>
+  </div>
+</div>
+<div class="flex items-center justify-center flex-col my-5">
   <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-sm my-5">
     <h2 class="text-2xl font-bold text-gray-700 text-center mb-6">Login</h2>
     <form [formGroup]="loginForm">
