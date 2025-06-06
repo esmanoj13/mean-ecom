@@ -5,9 +5,11 @@
       <div class="w-full md:w-1/2 p-4">
         @if(product){
         <!-- Main Product Image -->
-        <div class="border rounded-lg overflow-hidden flex justify-center p-4">
+        <div
+          class="border rounded-lg overflow-hidden flex justify-center p-4 h-96 w-full"
+        >
           <img
-            [src]="product.image[0]"
+            [src]="environment.API_URL + product.images[0]"
             [alt]="product.name"
             class="w-fit h-auto object-cover"
           />
@@ -15,9 +17,9 @@
 
         <!-- Thumbnail Images -->
         <div class="flex mt-4 space-x-2 overflow-x-auto">
-          @for(item of product.image; track $index){
+          @for(item of product.images; track $index){
           <img
-            [src]="item"
+            [src]="environment.API_URL + item"
             class="w-20 h-20 object-contain p-1 rounded-lg border cursor-pointer hover:opacity-75"
             (click)="changeMainImage(item)"
           />

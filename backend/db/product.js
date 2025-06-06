@@ -6,7 +6,7 @@ const productSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
-    shortdescription: {
+    shortDescription: {
         type: String,
         required: true,
         trim: true,
@@ -45,12 +45,13 @@ const productSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
     },
-    image: [
+    images: [
         {
             type: String,
             required: true,
         }
     ],
+
 });
 const Product = mongoose.model("Product", productSchema);
 export default Product;

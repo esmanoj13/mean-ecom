@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { WishlistService } from '../../services/wishlist.service';
 import { CartService } from '../../services/cart.service';
 import { AuthService } from '../../services/auth.service';
-
+import { environment } from '../../../environments/environment';
 @Component({
   selector: 'app-product-card',
   standalone: true,
@@ -16,6 +16,7 @@ import { AuthService } from '../../services/auth.service';
   styleUrl: './product-card.component.scss',
 })
 export class ProductCardComponent implements OnInit {
+  environment = environment;
   item = input.required<Product>();
   router = inject(Router);
   wishlist: Product[] = [];
@@ -61,17 +62,4 @@ export class ProductCardComponent implements OnInit {
   toggleCartItem(product: Product) {
     this.cartService.toggleCartItem(product, 1);
   }
-
-  // This is add the item to the cart
-  // addToCart(product: Product) {
-  //   if (!this.isInCart(product)) {
-  //     this.cartService.addToCartItems(product._id!, 1).subscribe(() => {
-  //       this.cartService.getCartItems();
-  //     });
-  //   } else {
-  //     this.cartService.removeFromCart(product._id!).subscribe(() => {
-  //       this.cartService.getCartItems();
-  //     });
-  //   }
-  // }
 }

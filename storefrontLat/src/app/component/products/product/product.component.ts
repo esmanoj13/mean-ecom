@@ -14,8 +14,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { ProductService } from '../../../services/product.service';
-import { MatIcon } from '@angular/material/icon';
-
+import { MatIconModule } from '@angular/material/icon';
+import { environment } from '../../../../environments/environment';
+import { Product } from '../../../types/data-types';
 @Component({
   selector: 'app-product',
   standalone: true,
@@ -25,12 +26,13 @@ import { MatIcon } from '@angular/material/icon';
     MatInputModule,
     MatFormFieldModule,
     MatButtonModule,
-    MatIcon,
+    MatIconModule,
   ],
   templateUrl: './product.component.html',
   styleUrl: './product.component.scss',
 })
 export class ProductComponent implements AfterViewInit, OnInit {
+  environment = environment;
   constructor(private location: Location) {
     this.dataSource = new MatTableDataSource([] as any);
   }
@@ -40,7 +42,7 @@ export class ProductComponent implements AfterViewInit, OnInit {
     'id',
     'image',
     'name',
-    'shortdescription',
+    'shortDescription',
     'brand',
     'category',
     'price',
@@ -78,9 +80,9 @@ export class ProductComponent implements AfterViewInit, OnInit {
 
   productlist() {
     this.productService.getAllProducts().subscribe({
-      next: (data: any) => {
+      next: (data: Product[]) => {
         this.dataSource.data = data;
-        console.log(' productlist:', this.dataSource.data);
+        console.log(' productlist:', data);
       },
       error(err) {
         console.error('Error fetching product:', err);

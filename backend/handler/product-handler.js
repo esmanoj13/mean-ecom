@@ -2,14 +2,17 @@
 // const Brand = require('./../db/brand');
 // const Category = require('./../db/category');
 import Product from "../db/product.js";
+import multer from 'multer';
 import Brand from "../db/brand.js";
 import Category from "../db/category.js";
-
+const upload = multer({ dest: 'public/images' });
 const addProduct = async (req, res) => {
     try {
         let model = req.body;
+        const imagePaths = req.files.map(file => '/images/' + file.filename);
         let product = new Product({
             ...model,
+            images: imagePaths,
         });
         await product.save();
         res.status(201).json({
@@ -74,15 +77,34 @@ const getProduct = async (req, res) => {
 }
 const updateProduct = async (req, res) => {
     try {
-        let model = req.body;
         let id = req.params.id;
-        const product = await Product.findByIdAndUpdate(id, model);
-        if (!product) {
-            res.status(404).json({ error: "product not found" })
+        let images = [];
+        if (req.files?.length) {
+            const uploaded = req.files.map(file => '/images/' + file.filename);
+            images.push(...uploaded);
+        }
+        const existing = req.body.images;
+        if (existing) {
+            const urls = Array.isArray(existing) ? existing : [existing];
+            urls.forEach(url => {
+                if (typeof url === 'string' && !url.startsWith('[object File]')) {
+                    images.push(url);
+                }
+            });
+        }
+        const updatedProduct = await Product.findByIdAndUpdate(
+            id,
+            { ...req.body, images },
+            { new: true }
+        );
+
+        if (!updatedProduct) {
+            return res.status(404).json({ error: "Product not found" });
         }
         return res.status(201).json({
             success: true,
             message: "Product update successfully",
+            product: updatedProduct
         });
     } catch (err) {
         console.error("error Fetching product:", err);
@@ -160,7 +182,7 @@ const getProductList = async (req, res) => {
         if (searchTerm) {
             queryParameter.$or = [
                 { name: { $regex: searchTerm, $options: "i" } },
-                { shortdescription: { $regex: searchTerm, $options: "i" } },
+                { shortDescription: { $regex: searchTerm, $options: "i" } },
             ];
         }
         if (categoryId) queryParameter.categoryId = categoryId;
@@ -178,7 +200,9 @@ const getProductList = async (req, res) => {
         const products = await Product.find(queryParameter)
             .sort({ [sortField]: sortDirection })
             .skip(skip)
-            .limit(limit);
+            .limit(limit)
+            .populate("categoryId")
+            .populate("brandId");
 
         return res.status(200).json(
             products

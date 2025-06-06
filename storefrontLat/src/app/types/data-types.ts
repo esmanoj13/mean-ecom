@@ -25,7 +25,7 @@ export interface Product {
   discount: number;
   isFeatured: boolean;
   isNewProduct: boolean;
-  image: string[];
+  images: string[];
 }
 
 export interface Register {

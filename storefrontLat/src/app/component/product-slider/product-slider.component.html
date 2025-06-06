@@ -2,9 +2,9 @@
   <h2 class="text-3xl font-bold">{{ title() }}</h2>
 </div>
 
-<div class="flex justify-start">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 p-4">
   @for(item of product(); track item._id){
-  <div class="w-3/12 m-2">
+  <div>
     <app-product-card [item]="item"></app-product-card>
   </div>
   }

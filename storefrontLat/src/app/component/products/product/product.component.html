@@ -29,7 +29,10 @@
         <ng-container matColumnDef="image">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Image</th>
           <td mat-cell *matCellDef="let row" class="img-cont">
-            <img [src]="row.image?.[0]" alt="Product Image" />
+            <img
+              [src]="environment.API_URL + row.images[0]"
+              alt="Product Image"
+            />
           </td>
         </ng-container>
 
@@ -39,11 +42,11 @@
           <td mat-cell *matCellDef="let row">{{ row.name }}</td>
         </ng-container>
 
-        <ng-container matColumnDef="shortdescription">
+        <ng-container matColumnDef="shortDescription">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>
             Short Description
           </th>
-          <td mat-cell *matCellDef="let row">{{ row.shortdescription }}</td>
+          <td mat-cell *matCellDef="let row">{{ row.shortDescription }}</td>
         </ng-container>
 
         <ng-container matColumnDef="brand">

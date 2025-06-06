@@ -8,7 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { WishlistService } from '../../services/wishlist.service';
 import { CartService } from '../../services/cart.service';
-
+import { environment } from '../../../environments/environment';
 @Component({
   selector: 'app-product-display',
   standalone: true,
@@ -17,6 +17,7 @@ import { CartService } from '../../services/cart.service';
   styleUrl: './product-display.component.scss',
 })
 export class ProductDisplayComponent implements OnInit {
+  environment = environment;
   productService = inject(ProductService);
   activatedRoute = inject(ActivatedRoute);
   allProductService = inject(AllproductsService);
@@ -54,8 +55,8 @@ export class ProductDisplayComponent implements OnInit {
   }
 
   changeMainImage(selectedImage: string) {
-    if (this.product && this.product.image.length > 0) {
-      this.product.image[0] = selectedImage;
+    if (this.product && this.product.images.length > 0) {
+      this.product.images[0] = selectedImage;
     }
   }
 
@@ -74,8 +75,8 @@ export class ProductDisplayComponent implements OnInit {
         // console.log(data);
         if (data) {
           this.product = data;
-          if (!this.product.image) {
-            this.product.image = [];
+          if (!this.product.images) {
+            this.product.images = [];
           }
           this.finalPrice = this.calculateFinalPrice();
           this.getsimilarProducts();

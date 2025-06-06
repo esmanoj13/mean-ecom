@@ -3,6 +3,7 @@ dotenv.config();
 import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
+
 // const express = require('express');
 // const cors = require("cors");
 // const mongoose = require("mongoose");
@@ -51,7 +52,7 @@ app.use("/category", categoryRoutes);
 app.use("/brand", brandRoutes);
 app.use("/product", productRoutes);
 app.use("/customer", verifyToken, customerRoutes);
-
+app.use('/images', express.static('public/images'));
 // app.use("/category", categoryRoutes);
 // app.use("/brand", brandRoutes);
 // app.use("/product", productRoutes);
