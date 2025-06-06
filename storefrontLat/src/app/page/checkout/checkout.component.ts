@@ -11,7 +11,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { CartService } from '../../services/cart.service';
 import { MatIcon } from '@angular/material/icon';
 import { Router } from '@angular/router';
-
+import { environment } from '../../../environments/environment';
 @Component({
   selector: 'app-checkout',
   standalone: true,
@@ -27,6 +27,7 @@ import { Router } from '@angular/router';
   styleUrl: './checkout.component.scss',
 })
 export class CheckoutComponent implements OnInit {
+  environment = environment;
   ecommCompany: string = 'EasyMart';
   router = inject(Router);
   ngOnInit(): void {

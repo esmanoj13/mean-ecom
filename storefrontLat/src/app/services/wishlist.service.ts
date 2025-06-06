@@ -19,7 +19,7 @@ export class WishlistService {
       });
   }
   isInWishlist(id: string): boolean {
-    return this.wishlistSignal().some((item) => item._id === id);
+    return this.wishlistSignal().some((item) => item && item._id === id);
   }
   get wishlistItems() {
     return this.wishlistSignal.asReadonly();

@@ -22,7 +22,9 @@ export class CartService {
     return this.cartSignal.asReadonly();
   }
   isInCart(id: string): boolean {
-    return this.cartSignal().some((item) => item.productId._id === id);
+    return this.cartSignal().some(
+      (item) => item && item.productId && item.productId._id === id
+    );
   }
   toggleCartItem(product: Product, quantity: number): void {
     const isInCart = this.cartSignal().some(

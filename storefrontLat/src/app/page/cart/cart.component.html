@@ -12,7 +12,7 @@
           <div class="flex items-center justify-between p-4">
             <div class="flex items-center space-x-4">
               <img
-                [src]="item.productId.images[0]"
+                [src]="environment.API_URL + item.productId.images[0]"
                 [alt]="item.productId.name"
                 class="w-24 h-24 object-contain rounded-lg"
               />

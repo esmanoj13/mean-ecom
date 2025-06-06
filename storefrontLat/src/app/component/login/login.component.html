@@ -9,6 +9,9 @@
 </div>
 <div class="flex items-center justify-center flex-col my-5">
   <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-sm my-5">
+    <mat-error class="mt-2 text-base">
+      {{ errorMessage }}
+    </mat-error>
     <h2 class="text-2xl font-bold text-gray-700 text-center mb-6">Login</h2>
     <form [formGroup]="loginForm">
       <!-- Email -->
@@ -68,9 +71,7 @@
       <button class="w-full" mat-raised-button (click)="addLogin($event)">
         Submit
       </button>
-      <mat-error class="mt-2 text-xs">
-        {{ errorMessage }}
-      </mat-error>
+
       <div class="flex justify-center items-center pt-2">
         Don't have an account &nbsp;<button
           class="underline text-red-500"

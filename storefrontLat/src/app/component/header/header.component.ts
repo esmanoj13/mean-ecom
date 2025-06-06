@@ -5,7 +5,6 @@ import {
   computed,
   ElementRef,
   HostListener,
-  viewChild,
   ViewChild,
 } from '@angular/core';
 import { CategoryService } from '../../services/category.service';

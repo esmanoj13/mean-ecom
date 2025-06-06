@@ -3,13 +3,13 @@ import { AuthService } from '../../services/auth.service';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [MatInputModule, MatButtonModule, ReactiveFormsModule],
+  imports: [MatInputModule, MatButtonModule, ReactiveFormsModule, RouterModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })

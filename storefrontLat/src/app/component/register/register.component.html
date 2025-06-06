@@ -69,13 +69,13 @@
               matInput
               placeholder="Enter your password"
             />
-            @if(formValidation['password'] &&
-            formValidation['password'].touched){
-            @if(formValidation['email'].errors?.['required']){
+            @if(formValidation['password'].touched){
+            @if(formValidation['password'].errors?.['required']){
             <mat-error>
               <small> Password is required.</small>
             </mat-error>
-            } @if(formValidation['password'].errors?.['minlength']){
+            } @if(formValidation['password'].errors?.['minlength'] &&
+            !formValidation['password'].errors?.['pattern']){
             <mat-error>
               <small>Password must be at least 8 characters long. </small>
             </mat-error>
@@ -96,27 +96,17 @@
             <mat-label>Confirm Password</mat-label>
             <input
               type="password"
-              formControlName="password"
+              formControlName="cpassword"
               matInput
               placeholder="Enter your password"
             />
-            @if(formValidation['password'] &&
-            formValidation['password'].touched){
-            @if(formValidation['email'].errors?.['required']){
-            <mat-error>
-              <small> Password is required.</small>
-            </mat-error>
-            } @if(formValidation['password'].errors?.['minlength']){
-            <mat-error>
-              <small>Password must be at least 8 characters long. </small>
-            </mat-error>
-            } @if(formValidation['password'].errors?.['pattern']){
-            <mat-error>
-              <small
-                >Password must contain at least one uppercase letter and one
-                special character.</small
-              >
-            </mat-error>
+            @if (formValidation['cpassword'].touched ||
+            formValidation['cpassword'].dirty) { @if
+            (formValidation['cpassword'].errors?.['required'] ) {
+            <mat-error>Confirm Password is required.</mat-error>
+            } @if (registerForm.errors?.['passwordMismatch'] &&
+            !formValidation['cpassword'].errors?.['required']) {
+            <mat-error>Password and Confirm Password do not match.</mat-error>
             } }
           </mat-form-field>
         </div>
@@ -128,13 +118,13 @@
             <mat-label>Address Line 1</mat-label>
             <input
               type="text"
-              formControlName="password"
+              formControlName="address1"
               matInput
               placeholder="Enter your Address line 1"
             />
-            @if(formValidation['password'] &&
-            formValidation['password'].touched){
-            @if(formValidation['email'].errors?.['required']){
+            @if(formValidation['address1'] &&
+            formValidation['address1'].touched){
+            @if(formValidation['address1'].errors?.['required']){
             <mat-error>
               <small> Adderess is required.</small>
             </mat-error>
@@ -142,19 +132,19 @@
           </mat-form-field>
         </div>
 
-        <!--Confirm  Password -->
+        <!--address2 -->
         <div class="mb-6">
           <mat-form-field class="w-full">
             <mat-label>Address Line 2</mat-label>
             <input
               type="text"
-              formControlName="password"
+              formControlName="address2"
               matInput
               placeholder="Enter your Address line 2"
             />
-            @if(formValidation['password'] &&
-            formValidation['password'].touched){
-            @if(formValidation['email'].errors?.['required']){
+            @if(formValidation['address2'] &&
+            formValidation['address2'].touched){
+            @if(formValidation['address2'].errors?.['required']){
             <mat-error>
               <small> Adderess 2 is required.</small>
             </mat-error>
@@ -172,9 +162,8 @@
               matInput
               placeholder="Enter your Address city"
             />
-            @if(formValidation['password'] &&
-            formValidation['password'].touched){
-            @if(formValidation['email'].errors?.['required']){
+            @if(formValidation['city'] && formValidation['city'].touched){
+            @if(formValidation['city'].errors?.['required']){
             <mat-error>
               <small> City is required.</small>
             </mat-error>
@@ -182,7 +171,7 @@
           </mat-form-field>
         </div>
 
-        <!--Confirm  Password -->
+        <!--State -->
         <div class="mb-6">
           <mat-form-field class="w-full">
             <mat-label>State</mat-label>
@@ -192,9 +181,8 @@
               matInput
               placeholder="Enter your state"
             />
-            @if(formValidation['password'] &&
-            formValidation['password'].touched){
-            @if(formValidation['email'].errors?.['required']){
+            @if(formValidation['state'] && formValidation['state'].touched){
+            @if(formValidation['state'].errors?.['required']){
             <mat-error>
               <small>State is required.</small>
             </mat-error>
@@ -240,7 +228,7 @@
             </mat-error>
             } @if(formValidation['pincode'].errors?.['pattern']){
             <mat-error>
-              <small> please use number only.</small>
+              <small> Please use number only.</small>
             </mat-error>
             }}
           </mat-form-field>
@@ -260,9 +248,14 @@
           <mat-error>
             <small>Contact is required.</small>
           </mat-error>
-          } @if(formValidation['contact'].errors?.['pattern']){
+          } @if(formValidation['contact'].errors?.['pattern'] &&
+          !formValidation['contact'].errors?.['minlength']){
           <mat-error>
             <small> please use number only.</small>
+          </mat-error>
+          } @if(formValidation['contact'].errors?.['minlength']){
+          <mat-error>
+            <small>Minimum 10 characters required.</small>
           </mat-error>
           }}
         </mat-form-field>

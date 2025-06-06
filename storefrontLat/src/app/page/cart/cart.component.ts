@@ -4,6 +4,7 @@ import { CartItem } from '../../types/data-types';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { Router, RouterLink } from '@angular/router';
+import { environment } from '../../../environments/environment';
 @Component({
   selector: 'app-cart',
   standalone: true,
@@ -12,6 +13,7 @@ import { Router, RouterLink } from '@angular/router';
   styleUrl: './cart.component.scss',
 })
 export class CartComponent implements OnInit {
+  environment = environment;
   cartService = inject(CartService);
   route = inject(Router);
   cartItems: CartItem[] = [];

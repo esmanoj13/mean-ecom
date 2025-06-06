@@ -32,30 +32,20 @@ const userlogin = async (req, res) => {
     try {
         let model = req.body;
         let user = await User.findOne({ email: model.email })
-        if (!user) {
-            return res.status(404).json({ message: 'User not found' });
+        if (!user || !(await bcrypt.compare(password, user.password))) {
+            return res.status(401).json({ message: 'Invalid email or password' });
         }
-        console.log(user);
-        let isMatched = await bcrypt.compare(model.password, user.password);
-        console.log(isMatched);
-        if (isMatched) {
-            const secretKey = 'secretkey';
-            const token = jwt.sign(
-                { id: user._id, email: user.email, isAdmin: user.isAdmin },
-                secretKey,
-                { expiresIn: '24h' }
-            );
-            return res.status(200).json({ token, user });
-        } else {
-            return res.status(401).json({ message: 'Invalid password' });
-        }
+        const token = jwt.sign(
+            { id: user._id, email: user.email, isAdmin: user.isAdmin },
+            secretKey,
+            { expiresIn: '24h' }
+        );
+        return res.status(200).json({ token, user });
     } catch (err) {
         console.error("Error to login user:", err);
         return res.status(500).json({
-            error: "An error occurred to login the user"
+            error: "An error occurred during login"
         })
     }
 }
-
-
 export { userregister, userlogin }
