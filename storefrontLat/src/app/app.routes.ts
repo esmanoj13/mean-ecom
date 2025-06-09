@@ -21,6 +21,8 @@ import { SearchComponent } from './page/search/search.component';
 import { CheckoutComponent } from './page/checkout/checkout.component';
 import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
 import { BlankLayoutComponent } from './layouts/blank-layout/blank-layout.component';
+import { ResetPasswordComponent } from './component/reset-password/reset-password.component';
+import { ForgotPasswordComponent } from './component/forgot-password/forgot-password.component';
 
 export const routes: Routes = [
   {
@@ -126,6 +128,14 @@ export const routes: Routes = [
       {
         path: 'login',
         component: LoginComponent,
+      },
+      {
+        path: 'forgot-password',
+        component: ForgotPasswordComponent,
+      },
+      {
+        path: 'reset-password',
+        component: ResetPasswordComponent,
       },
     ],
   },

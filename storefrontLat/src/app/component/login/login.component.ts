@@ -1,4 +1,4 @@
-import { afterNextRender, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -6,10 +6,17 @@ import { MatInputModule } from '@angular/material/input';
 import { Router, RouterModule } from '@angular/router';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { MatIconModule } from '@angular/material/icon';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [MatInputModule, MatButtonModule, ReactiveFormsModule, RouterModule],
+  imports: [
+    MatInputModule,
+    MatButtonModule,
+    ReactiveFormsModule,
+    RouterModule,
+    MatIconModule,
+  ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
@@ -63,5 +70,11 @@ export class LoginComponent {
   }
   register() {
     this.router.navigateByUrl('/register');
+  }
+  forgotPassword() {
+    this.router.navigateByUrl('/forgot-password');
+  }
+  goBack() {
+    this.router.navigateByUrl('/');
   }
 }

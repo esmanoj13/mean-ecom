@@ -1,4 +1,5 @@
-
+import dotenv from 'dotenv';
+dotenv.config();
 import jwt from "jsonwebtoken";
 const SECRET_KEY = process.env.JWT_SECRET || "secretkey";
 function verifyToken(req, res, next) {
@@ -8,11 +9,7 @@ function verifyToken(req, res, next) {
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
         return res.status(403).json({ message: 'No token provided!' });
     }
-
     const token = authHeader.split(' ')[1];
-    // console.log("Extracted Token:", token);
-
-
     try {
         const decoded = jwt.verify(token, SECRET_KEY);
         // console.log("decoded", decoded);

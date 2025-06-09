@@ -73,4 +73,15 @@ export class AuthService {
       return null;
     }
   }
+  forgotPassword(email: string) {
+    return this.http.post(`${this.$apiURL}/auth/forgot-password`, {
+      email,
+    });
+  }
+  resetPassword(token: string, password: string) {
+    return this.http.post(`${this.$apiURL}/auth/reset-password`, {
+      token,
+      password,
+    });
+  }
 }
