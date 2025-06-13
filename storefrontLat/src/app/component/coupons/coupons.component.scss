@@ -1,0 +1,84 @@
+// Form Styles
+.mat-mdc-form-field {
+  width: 100%;
+}
+
+// Table Styles
+.mat-mdc-row {
+  &:hover {
+    background-color: #f8fafc;
+    cursor: pointer;
+  }
+}
+
+.mat-mdc-header-cell {
+  font-weight: 600;
+  color: #4b5563;
+}
+
+.mat-mdc-cell {
+  color: #374151;
+}
+
+// Status Badge Styles
+.status-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+
+  &.active {
+    background-color: #dcfce7;
+    color: #15803d;
+  }
+
+  &.inactive {
+    background-color: #fee2e2;
+    color: #b91c1c;
+  }
+}
+
+// Action Button Styles
+.action-button {
+  &:hover {
+    background-color: #f3f4f6;
+  }
+
+  &.edit:hover {
+    color: #2563eb;
+  }
+
+  &.delete:hover {
+    color: #dc2626;
+  }
+}
+
+// Card Styles
+.content-card {
+  background: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+  overflow: hidden;
+
+  &-header {
+    padding: 1rem;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  &-body {
+    padding: 1.5rem;
+  }
+}
+
+// Transition
+.fade-transition {
+  transition: all 0.2s ease-in-out;
+}
+
+// Form Field Icons
+.field-icon {
+  color: #6b7280;
+  margin-right: 0.5rem;
+}

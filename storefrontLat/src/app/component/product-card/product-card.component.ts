@@ -60,6 +60,11 @@ export class ProductCardComponent implements OnInit {
     return this.cartlist.some((w) => w._id === item._id);
   }
   toggleCartItem(product: Product) {
-    this.cartService.toggleCartItem(product, 1);
+    if (!this.authService.loggedIn) {
+      this.router.navigate(['/login']);
+      return;
+    } else {
+      this.cartService.toggleCartItem(product, 1);
+    }
   }
 }

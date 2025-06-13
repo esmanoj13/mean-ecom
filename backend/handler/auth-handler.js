@@ -11,6 +11,7 @@ import nodemailer from 'nodemailer';
 const userregister = async (req, res) => {
     try {
         let model = req.body;
+
         let hashpassword = await bcrypt.hash(model.password, 10);
         let user = new User({
             name: model.name,
@@ -18,12 +19,21 @@ const userregister = async (req, res) => {
             password: hashpassword
         })
         if (!user) {
-            return res.status(404).json({ error: "Please fill the data." })
+            return res.status(404).json({
+                code: 404,
+                error: "Please fill the data."
+            })
         }
         await user.save();
+        const existingUser = await User.findOne({ email: model.email });
+        if (existingUser) {
+            return res.status(400).json({
+                code: 400,
+                error: "User already exists with this email."
+            });
+        }
         return res.status(200).json("Regiter successfully");
     } catch (err) {
-        console.error("Error to register user:", err);
         return res.status(500).json({
             error: "An error occurred to register the user"
         })

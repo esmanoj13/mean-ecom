@@ -7,9 +7,15 @@
     </a>
   </div>
 </div>
+
 <div class="flex items-center justify-center flex-col my-5">
   <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-2xl">
     <h2 class="text-2xl font-bold text-gray-700 text-center mb-6">Sign Up</h2>
+    @if(successMessage || errorMessage){ @if(successMessage){
+    <div class="text-green-600 mb-2 text-center">{{ successMessage }}</div>
+    } @if(errorMessage){
+    <div class="text-red-600 mb-2 text-center">{{ errorMessage }}</div>
+    }}
     <form [formGroup]="registerForm">
       <!-- Name -->
       <div class="grid grid-cols-2 gap-3">

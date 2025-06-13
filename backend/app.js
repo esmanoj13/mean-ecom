@@ -28,6 +28,7 @@ import brandRoutes from "./route/brand.js";
 import productRoutes from "./route/product.js";
 import customerRoutes from "./route/customer.js";
 import userRoutes from "./route/user.js";
+import couponRoutes from "./route/coupon.js";
 
 import { verifyToken, isAdmin } from './Middleware/auth.middleware.js';
 connectdB();
@@ -44,7 +45,8 @@ console.log('The API URL is:', apiUrl);
 app.get('/', (req, res) => {
     res.send(`API URL is: ${apiUrl}`);
 });
-app.use("/auth", userRoutes)
+app.use("/auth", userRoutes);
+app.use("/api/coupons", couponRoutes);
 // app.use("/category", verifyToken, categoryRoutes);
 // app.use("/brand", verifyToken, isAdmin, brandRoutes);
 // app.use("/product", verifyToken, isAdmin, productRoutes);

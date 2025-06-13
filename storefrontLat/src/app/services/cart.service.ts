@@ -26,6 +26,16 @@ export class CartService {
       (item) => item && item.productId && item.productId._id === id
     );
   }
+
+  getTotal(): number {
+    return this.cartSignal().reduce((total, item) => {
+      const price = item.productId?.price || 0;
+      const discount = item.productId?.discount || 0;
+      const discountedPrice = price - (price * discount) / 100;
+      return total + discountedPrice * item.quantity;
+    }, 0);
+  }
+
   toggleCartItem(product: Product, quantity: number): void {
     const isInCart = this.cartSignal().some(
       (item) => item.productId._id === product._id

@@ -10,7 +10,7 @@ import { ProductDisplayComponent } from './page/product-display/product-display.
 import { ProductListComponent } from './page/product-list/product-list.component';
 import { RegisterComponent } from './component/register/register.component';
 import { LoginComponent } from './component/login/login.component';
-
+import { CouponsComponent } from './component/coupons/coupons.component';
 import { DashboardComponent } from './component/dashboard/dashboard.component';
 import { authGuard } from './guard/auth-guard';
 import { adminGuard } from './guard/admin-guard';
@@ -90,7 +90,7 @@ export const routes: Routes = [
       {
         path: 'product/:id',
         component: ProductDisplayComponent,
-        canActivate: [adminGuard],
+        // canActivate: [adminGuard],
       },
       {
         path: 'wishlist',
@@ -99,6 +99,11 @@ export const routes: Routes = [
       {
         path: 'dashboard',
         component: DashboardComponent,
+        canActivate: [adminGuard],
+      },
+      {
+        path: 'admin/coupons',
+        component: CouponsComponent,
         canActivate: [adminGuard],
       },
       {

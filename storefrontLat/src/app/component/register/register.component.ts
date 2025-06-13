@@ -21,6 +21,8 @@ export class RegisterComponent {
   authService = inject(AuthService);
   router = inject(Router);
   fb = inject(FormBuilder);
+  errorMessage: string = '';
+  successMessage: string = '';
   registerForm = this.fb.group(
     {
       name: ['', [Validators.required, Validators.minLength(5)]],
@@ -56,11 +58,18 @@ export class RegisterComponent {
   }
   addRegister() {
     let value = this.registerForm.value;
-    console.log(value);
     this.authService
       .onRegister(value.name!, value.email!, value.password!)
-      .subscribe((data) => {
-        this.router.navigateByUrl('/login');
+      .subscribe({
+        next: (res) => {
+          this.successMessage = 'Registration successful!';
+          this.router.navigateByUrl('/login');
+        },
+        error: (err) => {
+          (this.errorMessage =
+            err?.error?.error || 'Registration failed. Please try again.'),
+            console.error('Error message:', this.errorMessage);
+        },
       });
   }
   login() {

@@ -211,6 +211,63 @@
           }}
         </mat-form-field>
       </div>
+
+      <!-- Coupon Code Section -->
+      <div class="mb-6">
+        <h3 class="text-lg font-semibold mb-4">Have a Coupon?</h3>
+        <div class="flex gap-3 items-start">
+          <mat-form-field class="w-full">
+            <mat-label>Coupon Code</mat-label>
+            <input
+              type="text"
+              matInput
+              formControlName="couponCode"
+              placeholder="Enter coupon code"
+              [readonly]="appliedCoupon"
+            />
+          </mat-form-field>
+          @if (!appliedCoupon) {
+          <button
+            mat-raised-button
+            color="primary"
+            type="button"
+            (click)="applyCoupon()"
+            class="mt-2"
+          >
+            Apply
+          </button>
+          } @else {
+          <button
+            mat-raised-button
+            color="warn"
+            type="button"
+            (click)="removeCoupon()"
+            class="mt-2"
+          >
+            Remove
+          </button>
+          }
+        </div>
+        @if (couponSuccess) {
+        <div class="text-green-600 text-sm mt-2">{{ couponSuccess }}</div>
+        } @if (couponError) {
+        <div class="text-red-600 text-sm mt-2">{{ couponError }}</div>
+        } @if (appliedCoupon) {
+        <div class="bg-green-50 p-3 rounded mt-3">
+          <div class="font-semibold">
+            Applied Discount:<span class="text-red-500">
+              @if (appliedCoupon.type === 'percentage') {
+              {{ appliedCoupon.value }}% off } @else { ₹{{
+                appliedCoupon.value
+              }}
+              off }</span
+            >
+          </div>
+          <div></div>
+        </div>
+        }
+      </div>
+
       <!-- Submit Button -->
       <button
         class="w-full"
@@ -274,16 +331,25 @@
     <div class="p-3">
       <div class="text-gray-600 flex justify-between items-center mt-2">
         <div class="font-bold">Sub Total:</div>
-        <div class="text-right">${{ getSubTotalPrice() }}</div>
+        <div class="text-right">₹{{ getSubTotalPrice() }}</div>
       </div>
+
+      @if (appliedCoupon) {
+      <div class="text-green-600 flex justify-between items-center mt-2">
+        <div class="font-bold">Discount:</div>
+        <div class="text-right">-₹{{ getDiscountAmount() }}</div>
+      </div>
+      }
+
       <div class="text-gray-600 flex justify-between items-center mt-2 py-2">
         <div class="font-bold">Shipping:</div>
-        <div class="text-right">{{ getShipping() }}</div>
+        <div class="text-right">Free</div>
       </div>
+
       <hr />
       <div class="text-gray-600 flex justify-between items-center mt-2 py-2">
         <div class="font-bold text-2xl">Total:</div>
-        <div class="text-right font-bold text-2xl">${{ getTotalPrice() }}</div>
+        <div class="text-right font-bold text-2xl">₹{{ getFinalPrice() }}</div>
       </div>
     </div>
   </div>

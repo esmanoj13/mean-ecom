@@ -41,8 +41,7 @@ export class LoginComponent {
   }
   addLogin(event: Event) {
     event.preventDefault();
-    if (this.loginForm.invalid) {
-      console.warn('invalid form submission');
+    if (this.loginForm.invalid) {    
       return;
     }
     const { email, password } = this.loginForm.value;

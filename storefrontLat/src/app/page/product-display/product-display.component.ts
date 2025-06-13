@@ -1,7 +1,7 @@
 import { Component, inject, OnInit, input } from '@angular/core';
 import { ProductService } from '../../services/product.service';
-import { ActivatedRoute } from '@angular/router';
-import { CartItem, Product } from '../../types/data-types';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Product } from '../../types/data-types';
 import { ProductSliderComponent } from '../../component/product-slider/product-slider.component';
 import { AllproductsService } from '../../services/allproducts.service';
 import { MatButtonModule } from '@angular/material/button';
@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { WishlistService } from '../../services/wishlist.service';
 import { CartService } from '../../services/cart.service';
 import { environment } from '../../../environments/environment';
+import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'app-product-display',
   standalone: true,
@@ -22,6 +23,8 @@ export class ProductDisplayComponent implements OnInit {
   activatedRoute = inject(ActivatedRoute);
   allProductService = inject(AllproductsService);
   wishlistService = inject(WishlistService);
+  authService = inject(AuthService);
+  router = inject(Router);
   id: string | null = null;
   product!: Product;
   finalPrice: number = 0;
@@ -99,9 +102,19 @@ export class ProductDisplayComponent implements OnInit {
       });
   }
   toggleWishlist(product: Product) {
-    this.wishlistService.toogleWishlist(product);
+    if (!this.authService.loggedIn) {
+      this.router.navigate(['/login']);
+      return;
+    } else {
+      this.wishlistService.toogleWishlist(product);
+    }
   }
   toggleCartItem(product: Product) {
-    this.cartService.toggleCartItem(product, 1);
+    if (!this.authService.loggedIn) {
+      this.router.navigate(['/login']);
+      return;
+    } else {
+      this.cartService.toggleCartItem(product, 1);
+    }
   }
 }
