@@ -1,9 +1,11 @@
 // const Cart = require("../db/cart.js")
-import Cart from "../db/cart.js"
+import Cart from "../db/cart.js";
+import Product from "../db/product.js";
 const addProductCart = async (req, res) => {
     const userId = req.user.id;
     const productId = req.params.id;
-    let { quantity } = req.body
+    let { quantity } = req.body;
+    const productData = await Product.findById(productId);
     console.log("userId:" + userId, "productId:" + productId, "quantity:" + quantity)
     try {
         quantity = parseInt(quantity, 10);
@@ -19,6 +21,7 @@ const addProductCart = async (req, res) => {
                 userId,
                 productId,
                 quantity,
+                price: productData.price
             })
         }
         await product.save();

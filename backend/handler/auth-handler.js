@@ -10,33 +10,48 @@ import nodemailer from 'nodemailer';
 
 const userregister = async (req, res) => {
     try {
-        let model = req.body;
-
-        let hashpassword = await bcrypt.hash(model.password, 10);
-        let user = new User({
-            name: model.name,
-            email: model.email,
-            password: hashpassword
-        })
-        if (!user) {
-            return res.status(404).json({
-                code: 404,
-                error: "Please fill the data."
-            })
+        const model = req.body;
+        // Validate required fields
+        if (!model.name || !model.email || !model.password) {
+            return res.status(400).json({
+                error: "Name, email, and password are required."
+            });
         }
-        await user.save();
+
+        // Check if user already exists
         const existingUser = await User.findOne({ email: model.email });
         if (existingUser) {
             return res.status(400).json({
-                code: 400,
                 error: "User already exists with this email."
             });
         }
-        return res.status(200).json("Regiter successfully");
+
+        // Hash password and create user
+        const hashpassword = await bcrypt.hash(model.password, 10);
+        const user = new User({
+            name: model.name,
+            email: model.email,
+            password: hashpassword,
+            address: model.address,
+            // contact: model.contact
+        });
+
+        // Save the user
+        await user.save();
+        return res.status(201).json({
+            message: "Registration successful",
+            user: {
+                name: user.name,
+                email: user.email,
+                address: user.address,
+                // contact: user.contact
+            }
+        });
     } catch (err) {
+        console.error('Registration error:', err);
         return res.status(500).json({
-            error: "An error occurred to register the user"
-        })
+            error: err.message || "An error occurred while registering the user"
+        });
     }
 }
 
@@ -101,22 +116,45 @@ const userForgotPassword = async (req, res) => {
     }
 }
 const userResetPassword = async (req, res) => {
-    const { token, newPassword } = req.body;
+    const { token, password } = req.body;
+
+    if (!token || !password) {
+        return res.status(400).json({ message: 'Token and password are required' });
+    }
+
     try {
+        // Verify the token and extract user ID
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+        // Find the user
         const user = await User.findById(decoded.id);
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
-        user.password = await bcrypt.hash(newPassword, 10);
+
+        // Hash the new password
+        const hashedPassword = await bcrypt.hash(password, 10);
+        user.password = hashedPassword;
         await user.save();
+
         return res.status(200).json({ message: 'Password reset successfully' });
     } catch (err) {
-        console.error("Error to reset password:", err.message, err.stack);
+        console.error("Error resetting password:", err.message, err.stack);
+
+        if (err.name === 'TokenExpiredError') {
+            return res.status(401).json({
+                message: 'Password reset link has expired. Please request a new one.'
+            });
+        }
+        if (err.name === 'JsonWebTokenError') {
+            return res.status(401).json({
+                message: 'Invalid reset token. Please request a new password reset.'
+            });
+        }
+
         return res.status(500).json({
-            error: "An error occurred while resetting the password"
+            message: "An error occurred while resetting the password"
         });
     }
 }
-
 export { userregister, userlogin, userResetPassword, userForgotPassword };

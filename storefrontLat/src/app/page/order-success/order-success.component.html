@@ -1,0 +1,28 @@
+<div class="min-h-screen flex flex-col items-center justify-center bg-gray-100 px-4">
+  <div class="bg-white rounded-2xl shadow-xl p-8 w-full max-w-md text-center space-y-6">
+    <mat-icon class="text-green-600 text-5xl">check_circle</mat-icon>
+
+    <h1 class="text-2xl font-bold text-gray-800">Thank you for your order!</h1>
+    <p class="text-gray-600">
+      Your order has been placed successfully. You’ll receive a confirmation email shortly.
+    </p>
+
+    <div class="bg-gray-50 rounded-xl px-4 py-3 text-left">
+      <h2 class="font-semibold text-lg mb-2 text-gray-700">Order Summary</h2>
+      <ul class="text-sm text-gray-600 space-y-1">
+        <li><strong>Order ID:</strong></li>
+        <li><strong>Payment Method:</strong> Cash on Delivery</li>
+        <li><strong>Estimated Delivery:</strong> 5–7 Business Days</li>
+      </ul>
+    </div>
+
+    <div class="flex flex-col sm:flex-row gap-3 mt-4">
+      <button mat-flat-button color="primary" routerLink="/my-orders" class="w-full sm:w-auto">
+        View My Orders
+      </button>
+      <button mat-stroked-button color="primary" routerLink="/" class="w-full sm:w-auto">
+        Back to Home
+      </button>
+    </div>
+  </div>
+</div>

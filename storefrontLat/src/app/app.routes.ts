@@ -23,6 +23,9 @@ import { MainLayoutComponent } from './layouts/main-layout/main-layout.component
 import { BlankLayoutComponent } from './layouts/blank-layout/blank-layout.component';
 import { ResetPasswordComponent } from './component/reset-password/reset-password.component';
 import { ForgotPasswordComponent } from './component/forgot-password/forgot-password.component';
+import { AllOrdersComponent } from './page/all-orders/all-orders.component';
+import { OrderSuccessComponent } from './page/order-success/order-success.component';
+import { OrdersComponent } from './page/orders/orders.component';
 
 export const routes: Routes = [
   {
@@ -141,6 +144,18 @@ export const routes: Routes = [
       {
         path: 'reset-password',
         component: ResetPasswordComponent,
+      },
+      {
+        path: 'order-success',
+        component: OrderSuccessComponent,
+      },
+      {
+        path: 'orders',
+        component: OrdersComponent,
+      },
+      {
+        path: 'allorders',
+        component: AllOrdersComponent,
       },
     ],
   },

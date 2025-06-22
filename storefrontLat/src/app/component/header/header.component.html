@@ -59,6 +59,7 @@
         <button routerLink="/login"><mat-icon>person</mat-icon></button>
         }
       </div>
+      @if(!authService.isAdmin){
       <button
         mat-fab
         aria-label="Toggle Wishlist"
@@ -71,6 +72,7 @@
           >{{ wishlistCount() }}</span
         >
       </button>
+
       <button
         class="icon-button"
         aria-label="Cart"
@@ -83,7 +85,7 @@
           >{{ cartItemCount() }}</span
         >
       </button>
-      @if(authService.loggedIn){
+      } @if(authService.loggedIn){
       <button (click)="logout()"><mat-icon>logout</mat-icon></button>
       }
     </div>

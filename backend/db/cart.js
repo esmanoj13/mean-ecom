@@ -20,7 +20,20 @@ const cartSchema = new mongoose.Schema({
             validator: Number.isInteger,
             message: "{VALUE} is not a valid integer."
         }
+    },
+    price: {
+        type: Number,
+        required: true
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
+    },
+    updatedAt: {
+        type: Date,
+        default: Date.now
     }
+
 });
 // const cartSchema = new mongoose.Schema({
 //     user: {

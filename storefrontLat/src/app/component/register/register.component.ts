@@ -6,6 +6,7 @@ import {
   ValidationErrors,
   AbstractControl,
 } from '@angular/forms';
+import { Register } from '../../types/data-types';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { AuthService } from '../../services/auth.service';
@@ -41,9 +42,9 @@ export class RegisterComponent {
       city: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
       state: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
       country: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
-      pincode: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
+      pincode: [null, [Validators.required, Validators.pattern('^[0-9]*$')]],
       contact: [
-        '',
+        null,
         [
           Validators.required,
           Validators.pattern('^[0-9]*$'),
@@ -57,20 +58,78 @@ export class RegisterComponent {
     return this.registerForm.controls;
   }
   addRegister() {
-    let value = this.registerForm.value;
-    this.authService
-      .onRegister(value.name!, value.email!, value.password!)
-      .subscribe({
-        next: (res) => {
-          this.successMessage = 'Registration successful!';
+    this.errorMessage = '';
+    this.successMessage = '';
+
+    // Check form validity
+    if (this.registerForm.invalid) {
+      const errors = [];
+      const controls = this.registerForm.controls;
+
+      if (controls.name.errors)
+        errors.push('Name is required and must be at least 5 characters');
+      if (controls.email.errors)
+        errors.push('Please enter a valid email address');
+      if (controls.password.errors) {
+        if (controls.password.errors['minlength']) {
+          errors.push('Password must be at least 8 characters');
+        }
+        if (controls.password.errors['pattern']) {
+          errors.push(
+            'Password must contain at least one uppercase letter and one special character'
+          );
+        }
+      }
+      if (
+        controls.cpassword.errors ||
+        this.registerForm.errors?.['passwordMismatch']
+      ) {
+        errors.push('Passwords do not match');
+      }
+      if (controls.contact.errors) {
+        errors.push('Please enter a valid 10-digit contact number');
+      }
+
+      this.errorMessage = errors.join('. ');
+      return;
+    }
+
+    const formValue = this.registerForm.value;
+
+    // Create payload with proper type checking
+    const payload: Register = {
+      name: formValue.name!,
+      email: formValue.email!,
+      password: formValue.password!,
+      address: {
+        address1: formValue.address1!,
+        address2: formValue.address2!,
+        city: formValue.city!,
+        state: formValue.state!,
+        country: formValue.country!,
+        pincode: Number(formValue.pincode!),
+        contact: Number(formValue.contact!),
+      },
+    };
+
+    this.authService.onRegister(payload).subscribe({
+      next: (response) => {
+        this.successMessage =
+          'Registration successful! Redirecting to login...';
+        this.registerForm.reset();
+        setTimeout(() => {
           this.router.navigateByUrl('/login');
-        },
-        error: (err) => {
-          (this.errorMessage =
-            err?.error?.error || 'Registration failed. Please try again.'),
-            console.error('Error message:', this.errorMessage);
-        },
-      });
+        }, 2000);
+      },
+      error: (err) => {
+        if (err.status === 400 && err.error?.error) {
+          this.errorMessage = err.error.error;
+        } else {
+          this.errorMessage = 'Registration failed. Please try again later.';
+        }
+        console.error('Registration error:', err);
+      },
+    });
   }
   login() {
     this.router.navigateByUrl('/login');

@@ -1,17 +1,46 @@
-import Order from './../db/order';
+import Order from './../db/order.js';
 const addorder = async (req, res) => {
-    let userId = req.user.id;
-    let orderdetails = req.body;
-    let order = new Order({
-        ...orderdetails,
-        userId,
-    });
-    await Order.save();
+    try {
+        let userId = req.user.id;
+        let orderdetails = req.body;
+        let order = new Order({
+            ...orderdetails,
+            userId,
+        });
+        const savedOrder = await order.save();
+        res.status(201).json(savedOrder);
+    } catch (err) {
+        res.status(500).json({ message: 'Failed to add order', error: err.message });
+    }
 }
-const getorder = async (req, res) => {
-    let orders = await Order.find({ userId });
-    return orders.toObject();
+const getcustomerorders = async (req, res) => {
+    try {
+        const userId = req.user.id;
+        let orders = await Order.find({ userId: req.user.id }).sort({ orderDate: -1 });
+        res.status(200).json(orders);
+    } catch (err) {
+        res.status(500).json({ message: 'Failed to fetch order', error: err.message });
+    }
 }
-
-export { addorder, getorder }
-
+const getAllOrders = async (req, res) => {
+    try {
+        let orders = await Order.find().sort({ orderDate: -1 });
+        res.status(200).json(orders);
+    } catch (err) {
+        res.status(500).json({ message: 'Failed to fetch all orders', error: err.message });
+    }
+}
+const deleteOrder = async (req, res) => {
+    try {
+        const userId = req.user.id;
+        const orderId = req.params.id;
+        const order = await Order.findOneAndDelete({ _id: orderId, userId });
+        if (!order) {
+            return res.status(404).json({ message: "Order not found or not authorized" });
+        }
+        res.status(200).json({ message: "Order deleted successfully", order });
+    } catch (err) {
+        res.status(500).json({ message: "Failed to delete order", error: err.message });
+    }
+}
+export { addorder, getAllOrders, getcustomerorders, deleteOrder }

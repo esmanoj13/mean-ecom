@@ -33,6 +33,16 @@ export interface Register {
   name: string;
   email: string;
   password: string;
+
+  address: {
+    address1: string;
+    address2: string;
+    city: string;
+    state: string;
+    country: string;
+    pincode: Number;
+    contact: Number;
+  };
 }
 export interface Login {
   _id?: string;
@@ -42,4 +52,36 @@ export interface Login {
 export interface CartItem {
   quantity: number;
   productId: Product;
+}
+export enum OrderStatus {
+  Pending = 'pending',
+  Confirmed = 'confirmed',
+  Shipped = 'shipped',
+  Delivered = 'delivered',
+  Cancelled = 'cancelled',
+}
+export interface Order {
+  userId: string;
+  items: CartItem[];
+  paymentType: string;
+  coupon: string | null;
+  totalAmount: number;
+  discount: number;
+  finalAmount: number;
+  _id?: String;
+  status: OrderStatus;
+  orderDate: Date;
+  deliveryDate: Date;
+}
+export interface newAddress {
+  userId: string;
+  address: {
+    address1: string;
+    address2: string;
+    city: string;
+    state: string;
+    country: string;
+    pincode: string;
+    contact: string;
+  };
 }

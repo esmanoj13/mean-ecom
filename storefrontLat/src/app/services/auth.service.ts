@@ -4,6 +4,7 @@ import { Register, Login } from '../types/data-types';
 import { environment } from '../../environments/environment';
 import { CartService } from './cart.service';
 import { WishlistService } from './wishlist.service';
+import { tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -14,18 +15,33 @@ export class AuthService {
   private wishlistService = inject(WishlistService);
   constructor() {}
   private $apiURL = environment.API_URL;
-  onRegister(name: string, email: string, password: string) {
-    return this.http.post<Register>(`${this.$apiURL}/auth/register`, {
-      name,
-      email,
-      password,
-    });
+  onRegister(user: Register) {
+    return this.http.post<Register>(`${this.$apiURL}/auth/register`, user);
   }
   onLogin(email: string, password: string) {
-    return this.http.post(`${this.$apiURL}/auth/login`, {
-      email,
-      password,
-    });
+    return this.http
+      .post(`${this.$apiURL}/auth/login`, {
+        email,
+        password,
+      })
+      .pipe(
+        tap((response: any) => {
+          if (response?.token) {
+            this.setAuthData(response.token, response.user);
+          }
+        })
+      );
+  }
+  private setAuthData(token: string, user: any) {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      localStorage.setItem('token', token);
+      localStorage.setItem('user', JSON.stringify(user));
+      // Reload cart and wishlist after setting auth data
+      if (this.cartService && this.wishlistService) {
+        this.cartService.loadcart();
+        this.wishlistService.loadWishlist();
+      }
+    }
   }
   get loggedIn() {
     if (typeof window !== 'undefined' && window.localStorage) {

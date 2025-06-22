@@ -1,6 +1,16 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 
 export const tokenHTTPInterceptor: HttpInterceptorFn = (req, next) => {
+  // Skip authentication for public endpoints
+  if (
+    req.url.includes('/auth/login') ||
+    req.url.includes('/auth/register') ||
+    req.url.includes('/auth/forgot-password') ||
+    req.url.includes('/auth/reset-password')
+  ) {
+    return next(req);
+  }
+
   let token: string | null = null;
   if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
     try {
@@ -16,10 +26,13 @@ export const tokenHTTPInterceptor: HttpInterceptorFn = (req, next) => {
         Authorization: `Bearer ${token}`,
       },
     });
-    // console.log('Modified Request:', modifiedReq);
     return next(modifiedReq);
   }
 
-  console.log('No token found, sending request without Authorization header.');
+  // Only log token missing for protected endpoints
+  if (req.url.includes('/customer/') || req.url.includes('/admin/')) {
+    console.warn('Protected endpoint accessed without authentication token');
+  }
+
   return next(req);
 };

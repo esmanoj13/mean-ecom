@@ -1,28 +1,30 @@
 // const mongoose = require("mongoose");
 import mongoose from "mongoose";
 const orderSchema = new mongoose.Schema({
-    name: {
-        type: String,
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
         required: true,
-        trim: true
     },
-    items: [{
-        type: mongoose.Schema.Types.Mixed,
-        required: true
-    }],
-    address: {
-        type: mongoose.Schema.Types.Mixed,
-        required: true
-    },
+    items: [],
     paymentType: {
-        type: string,
+        type: String,
+        required: true
+    },
+    totalAmount: {
+        type: Number,
         required: true
     },
     status: {
-        type: string,
+        type: String,
+        enum: ['pending', 'confirmed', 'shipped', 'delivered', 'cancelled'],
         required: true,
     },
-    date: {
+    orderDate: {
+        type: Date,
+        default: Date.now,
+    },
+    deliveryDate: {
         type: Date
     }
 });

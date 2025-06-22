@@ -15,6 +15,7 @@ export class CartService {
     this.http
       .get<CartItem[]>(`${this.$apiURL}/customer/cart`)
       .subscribe((items) => {
+        console.log(items);
         this.cartSignal.set(items);
       });
   }

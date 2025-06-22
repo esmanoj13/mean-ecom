@@ -28,6 +28,8 @@ import { Location } from '@angular/common';
 })
 export class ResetPasswordComponent implements OnInit {
   token: string = '';
+  successMessage: string = '';
+  errorMessage: string = '';
   fb = inject(FormBuilder);
   route = inject(ActivatedRoute);
   http = inject(HttpClient);
@@ -51,23 +53,38 @@ export class ResetPasswordComponent implements OnInit {
   ngOnInit(): void {
     this.token = this.route.snapshot.queryParamMap.get('token') || '';
     if (!this.token) {
-      console.error('No token provided for password reset.');
+      this.errorMessage = 'No token provided for password reset.';
+      // Redirect to forgot password after 3 seconds
+      setTimeout(() => this.router.navigateByUrl('/forgot-password'), 3000);
       return;
     }
   }
   onSubmit() {
-    //   if (this.resetForm.valid) {
-    //     const { password, cpassword } = this.resetForm.value;
-    //     if (!password || !cpassword) {
-    //       console.log('Password and confirm password are required.');
-    //       return;
-    //     }
-    //   }
+    if (!this.resetForm.valid) {
+      this.errorMessage = 'Please fix the form errors before submitting.';
+      return;
+    }
+
     const password = this.resetForm.value.password;
-    if (!password) return;
+    if (!password) {
+      this.errorMessage = 'Password is required.';
+      return;
+    }
+
+    this.errorMessage = '';
+    this.successMessage = '';
+
     this.authService.resetPassword(this.token, password).subscribe({
-      next: () => console.log('Reset link sent to your email.'),
-      error: () => console.log('Error sending reset link.'),
+      next: (response: any) => {
+        this.successMessage =
+          'Password reset successfully! Redirecting to login...';
+        this.resetForm.reset();
+        setTimeout(() => this.router.navigateByUrl('/login'), 3000);
+      },
+      error: (err) => {
+        this.errorMessage =
+          err.error?.message || 'Error resetting password. Please try again.';
+      },
     });
   }
   get formValidation() {

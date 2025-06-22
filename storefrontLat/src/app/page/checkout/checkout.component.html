@@ -17,8 +17,66 @@
     </button>
   </div>
 </div>
+
 <div class="flex mt-3">
   <div class="w-1/2 my-3 px-3">
+    @if(authService.loggedIn){
+    <h2>Delivery Address</h2>
+    @for(address of addresses; track $index) {
+    <div
+      class="border rounded-xl p-4 mb-4 shadow-sm hover:shadow-md transition-all duration-300 relative"
+      [class.border-blue-500]="selectedAddressId === address._id"
+      [class.bg-blue-50]="selectedAddressId === address._id"
+    >
+      <div class="flex items-start gap-3">
+        <!-- Radio button -->
+        <mat-radio-button
+          class="mt-1"
+          [value]="address._id"
+          [checked]="selectedAddressId === address._id"
+          (change)="selectAddress(address._id)"
+          name="selectedAddress"
+        ></mat-radio-button>
+
+        <!-- Address content -->
+        <div class="flex-1 text-sm">
+          <p class="font-semibold mb-1">
+            {{ address.address1 }}, {{ address.address2 }}
+          </p>
+          <p class="text-gray-600">
+            {{ address.city }}, {{ address.state }}, {{ address.country }} -
+            {{ address.pincode }}
+          </p>
+          <p>Contact No.:{{ address.contact }}</p>
+        </div>
+      </div>
+
+      <!-- Action buttons -->
+      <div class="mt-3 flex justify-end gap-3">
+        <button
+          mat-stroked-button
+          color="primary"
+          (click)="editAddress(address)"
+        >
+          <mat-icon class="mr-1">edit</mat-icon> Edit
+        </button>
+        <button
+          mat-stroked-button
+          color="warn"
+          (click)="deleteAddress(address._id)"
+        >
+          <mat-icon class="mr-1">delete</mat-icon> Delete
+        </button>
+      </div>
+    </div>
+    }
+
+    <div class="my-3">
+      <button class="w-full" mat-raised-button (click)="changeToAddress()">
+        Add new Address
+      </button>
+    </div>
+    } @if(authService.loggedIn && changeAddress){
     <form [formGroup]="checkoutForm">
       <!-- Name -->
       <div class="grid grid-cols-2 gap-3">
@@ -184,7 +242,7 @@
             </mat-error>
             } @if(formValidation['pincode'].errors?.['pattern']){
             <mat-error>
-              <small> please use number only.</small>
+              <small>Please use number only.</small>
             </mat-error>
             }}
           </mat-form-field>
@@ -212,8 +270,21 @@
         </mat-form-field>
       </div>
 
-      <!-- Coupon Code Section -->
-      <div class="mb-6">
+      <!-- Submit Button -->
+      <button
+        class="w-full"
+        mat-raised-button
+        (click)="proceedToSaveAddress()"
+        [disabled]="!this.checkoutForm.valid"
+      >
+        Add
+      </button>
+    </form>
+    }
+
+    <!-- Coupon Code Section -->
+    <form [formGroup]="couponForm">
+      <div class="mb-6 mt-2">
         <h3 class="text-lg font-semibold mb-4">Have a Coupon?</h3>
         <div class="flex gap-3 items-start">
           <mat-form-field class="w-full">
@@ -267,16 +338,6 @@
         </div>
         }
       </div>
-
-      <!-- Submit Button -->
-      <button
-        class="w-full"
-        mat-raised-button
-        (click)="proccedToSaveAddress()"
-        [disabled]="!this.checkoutForm.valid"
-      >
-        Submit
-      </button>
     </form>
     <h2 class="text-2xl my-3">Shipping Method</h2>
     <div class="bg-gray-100 p-3 rounded-lg mb-4">
@@ -291,6 +352,9 @@
       <mat-radio-button value="paypal">PayPal</mat-radio-button>
       <mat-radio-button value="creditcard">Credit Card</mat-radio-button>
     </mat-radio-group>
+    <button class="w-full" mat-raised-button (click)="goToOrder()">
+      Submit
+    </button>
   </div>
   <div class="w-1/2 bg-gray-100 py-2 px-3">
     @for(item of getcartItems(); track $index){

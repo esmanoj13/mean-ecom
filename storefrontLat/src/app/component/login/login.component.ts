@@ -41,7 +41,7 @@ export class LoginComponent {
   }
   addLogin(event: Event) {
     event.preventDefault();
-    if (this.loginForm.invalid) {    
+    if (this.loginForm.invalid) {
       return;
     }
     const { email, password } = this.loginForm.value;
@@ -52,19 +52,24 @@ export class LoginComponent {
           this.errorMessage =
             error?.error?.message || 'Invalid email or password.';
           console.error('Login failed', error);
-          return of(null); // Handle error gracefully
+          return of(null);
         })
       )
-      .subscribe((data: any) => {
-        if (!data || !data.token) {
-          console.log('No token is recived,login failed');
-          return;
-        }
-        if (typeof window !== 'undefined' && window.localStorage) {
-          localStorage.setItem('token', data.token);
-          localStorage.setItem('user', JSON.stringify(data.user));
-          this.router.navigateByUrl('/');
-        }
+      .subscribe({
+        next: (data: any) => {
+          if (!data) {
+            return;
+          }
+          // AuthService handles token storage via tap operator
+          if (data.user?.isAdmin) {
+            this.router.navigate(['/dashboard']);
+          } else {
+            this.router.navigate(['/']);
+          }
+        },
+        error: (error) => {
+          this.errorMessage = error?.error?.message || 'Login failed';
+        },
       });
   }
   register() {

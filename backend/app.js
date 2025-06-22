@@ -29,6 +29,7 @@ import productRoutes from "./route/product.js";
 import customerRoutes from "./route/customer.js";
 import userRoutes from "./route/user.js";
 import couponRoutes from "./route/coupon.js";
+import orderRoutes from "./route/order.js";
 
 import { verifyToken, isAdmin } from './Middleware/auth.middleware.js';
 connectdB();
@@ -55,6 +56,8 @@ app.use("/brand", brandRoutes);
 app.use("/product", productRoutes);
 app.use("/customer", verifyToken, customerRoutes);
 app.use('/images', express.static('public/images'));
+app.use('/order', verifyToken, orderRoutes);
+
 // app.use("/category", categoryRoutes);
 // app.use("/brand", brandRoutes);
 // app.use("/product", productRoutes);
