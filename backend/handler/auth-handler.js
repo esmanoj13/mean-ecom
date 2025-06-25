@@ -14,7 +14,7 @@ const userregister = async (req, res) => {
         // Validate required fields
         if (!model.name || !model.email || !model.password) {
             return res.status(400).json({
-                error: "Name, email, and password are required."
+                error: "User information are required"
             });
         }
 
@@ -65,7 +65,7 @@ const userlogin = async (req, res) => {
         const token = jwt.sign(
             { id: user._id, email: user.email, isAdmin: user.isAdmin },
             process.env.JWT_SECRET,
-            { expiresIn: '24h' }
+            { expiresIn: '1h' }
         );
         return res.status(200).json({ token, user });
     } catch (err) {

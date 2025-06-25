@@ -1,4 +1,5 @@
 // middlewares/multerConfig.js
+// This is used for the storing the path of image in database
 import multer from 'multer';
 import path from 'path';
 

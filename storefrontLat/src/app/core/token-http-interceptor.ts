@@ -33,6 +33,5 @@ export const tokenHTTPInterceptor: HttpInterceptorFn = (req, next) => {
   if (req.url.includes('/customer/') || req.url.includes('/admin/')) {
     console.warn('Protected endpoint accessed without authentication token');
   }
-
   return next(req);
 };

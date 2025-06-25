@@ -7,7 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 @Component({
   selector: 'app-all-orders',
   standalone: true,
@@ -31,6 +31,7 @@ export class AllOrdersComponent implements OnInit {
 
   productService = inject(ProductService);
   orderService = inject(OrderService);
+  private router = inject(Router);
   getAllOrders() {
     this.orderService.getAllOrders().subscribe({
       next: (data: any) => {
@@ -42,7 +43,9 @@ export class AllOrdersComponent implements OnInit {
       },
     });
   }
-
+  goBack() {
+    this.router.navigateByUrl('/dashboard');
+  }
   // getproductlist() {
   //   this.productService.getAllProducts().subscribe({
   //     next: (data) => {

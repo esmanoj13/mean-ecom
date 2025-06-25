@@ -4,8 +4,7 @@ import User from "../db/user.js";
 const getAddress = async (req, res) => {
     try {
         const user = await User.findById(req.user.id);
-        res.json(user.address);
-        console.log(user);
+        res.json(user.address);     
     } catch (err) {
         res.status(500).json({
             message: 'server error'

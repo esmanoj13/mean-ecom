@@ -105,11 +105,6 @@ export const routes: Routes = [
         canActivate: [adminGuard],
       },
       {
-        path: 'admin/coupons',
-        component: CouponsComponent,
-        canActivate: [adminGuard],
-      },
-      {
         path: 'user-profile',
         component: UserProfileComponent,
         canActivate: [authGuard],
@@ -156,6 +151,11 @@ export const routes: Routes = [
       {
         path: 'allorders',
         component: AllOrdersComponent,
+      },
+      {
+        path: 'admin/coupons',
+        component: CouponsComponent,
+        canActivate: [adminGuard],
       },
     ],
   },

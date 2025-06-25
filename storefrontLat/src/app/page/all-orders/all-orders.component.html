@@ -8,10 +8,18 @@
   </div>
 </div>
 <div class="min-h-screen bg-gray-50 p-6">
-  <h2 class="text-3xl font-bold mb-7 text-gray-800 text-center underline">
-    My Orders
-  </h2>
-
+  <div class="flex items-center gap-4">
+    <button
+      mat-icon-button
+      (click)="goBack()"
+      class="text-gray-600 hover:text-gray-800"
+    >
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <h2 class="text-3xl font-bold mb-7 text-gray-800 text-center underline">
+      All Orders
+    </h2>
+  </div>
   <!-- Empty state -->
   @if (allOrders.length === 0) {
   <div class="text-center text-gray-500 mt-10">
