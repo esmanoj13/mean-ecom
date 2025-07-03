@@ -1,17 +1,23 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, inject, signal } from '@angular/core';
+import { Injectable, PLATFORM_ID, inject, signal } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { CartItem, Product } from '../types/data-types';
-
+import { isPlatformBrowser } from '@angular/common';
 @Injectable({
   providedIn: 'root',
 })
 export class CartService {
   http = inject(HttpClient);
+  platformId = inject(PLATFORM_ID);
   private $apiURL = environment.API_URL;
   public cartSignal = signal<CartItem[]>([]);
   constructor() {}
   loadcart(): void {
+    // This is used to check for universal angular,
+    // Angular provides a way to check if code is running in the browser or server using isPlatformBrowser.
+    if (!isPlatformBrowser(this.platformId)) return;
+    const token = localStorage.getItem('token');
+    if (!token) return;
     this.http
       .get<CartItem[]>(`${this.$apiURL}/customer/cart`)
       .subscribe((items) => {
@@ -19,6 +25,7 @@ export class CartService {
         this.cartSignal.set(items);
       });
   }
+  // Getter function
   get cartItems() {
     return this.cartSignal.asReadonly();
   }

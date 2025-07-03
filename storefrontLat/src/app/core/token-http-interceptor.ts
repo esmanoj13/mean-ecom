@@ -15,18 +15,17 @@ export const tokenHTTPInterceptor: HttpInterceptorFn = (req, next) => {
   if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
     try {
       token = localStorage.getItem('token');
+      if (token) {
+        const modifiedReq = req.clone({
+          setHeaders: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        return next(modifiedReq);
+      }
     } catch (error) {
       console.error('Error accessing localStorage:', error);
     }
-  }
-
-  if (token) {
-    const modifiedReq = req.clone({
-      setHeaders: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return next(modifiedReq);
   }
 
   // Only log token missing for protected endpoints

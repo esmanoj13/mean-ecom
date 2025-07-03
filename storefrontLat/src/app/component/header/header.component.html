@@ -44,12 +44,14 @@
       <div class="flex flex-col items-center justify-center">
         @if(authService.loggedIn){ @if(authService.isAdmin){
         <h2 class="flex align-middle">
+          G'day
           <a class="px-2 capitalize" routerLink="/dashboard">{{
             authService.userName
           }}</a>
         </h2>
         }@else{
         <h2>
+          G'day
           <a class="capitalize" routerLink="/user-profile">{{
             authService.userName
           }}</a>

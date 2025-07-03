@@ -7,6 +7,8 @@ import { Router, RouterModule } from '@angular/router';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatError } from '@angular/material/form-field';
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -16,6 +18,8 @@ import { MatIconModule } from '@angular/material/icon';
     ReactiveFormsModule,
     RouterModule,
     MatIconModule,
+    MatFormFieldModule,
+    MatError,
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',

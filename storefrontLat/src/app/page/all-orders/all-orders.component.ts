@@ -28,7 +28,6 @@ export class AllOrdersComponent implements OnInit {
   ngOnInit(): void {
     this.getAllOrders();
   }
-
   productService = inject(ProductService);
   orderService = inject(OrderService);
   private router = inject(Router);
@@ -43,15 +42,14 @@ export class AllOrdersComponent implements OnInit {
       },
     });
   }
+
+  // For back the previos page
   goBack() {
     this.router.navigateByUrl('/dashboard');
   }
-  // getproductlist() {
-  //   this.productService.getAllProducts().subscribe({
-  //     next: (data) => {
-  //       this.orders =
-  //     },
-  //     error: (err) => {},
-  //   });
-  // }
+  onStatusChange(status: string, id: string) {
+    this.orderService.changeOrderStatus(status, id).subscribe((data: any) => {
+      this.allOrders = data;
+    });
+  }
 }

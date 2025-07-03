@@ -13,7 +13,7 @@
     <mat-card-header>
       <mat-card-title class="font-bold text-2xl">
         <h2
-          class="font-medium capitalize text-2xl md:text-4xl text-gray-800 hover:text-blue-600 cursor-pointer"
+          class="font-medium capitalize text-2xl md:text-2xl text-gray-800 hover:text-blue-600 cursor-pointer"
           (click)="productdisplay(item()._id)"
         >
           {{ item().name }}
@@ -21,24 +21,26 @@
       </mat-card-title>
     </mat-card-header>
     @if(item().discount > 0){
-    <div class="flex justify-start p-2 align-middle mt-2">
+    <div class="flex justify-between p-2 align-middle mt-2">
+      <span
+        class="text-xl font-bold text-gray-600 line-through flex items-center"
+        >{{ item().price | currency : "USD" : "symbol" : "1.2-2" }}</span
+      >&nbsp;
+      <span class="text-2xl font-bold text-red-700">{{
+        this.item().price - (this.item().price * this.item().discount) / 100
+          | currency : "USD" : "symbol" : "1.2-2"
+      }}</span
+      >&nbsp;
       <span
         class="text-xs font-bold text-white text-center bg-black px-2 py-1 rounded flex items-center"
         >Save {{ item().discount }}%</span
-      >&nbsp;
-      <span
-        class="text-xl font-bold text-gray-600 line-through flex items-center"
-        >${{ item().price }}</span
-      >&nbsp;
-      <span class="text-3xl font-bold text-red-700"
-        >${{
-          this.item().price - (this.item().price * this.item().discount) / 100
-        }}</span
       >
     </div>
     } @else {
     <div class="flex justify-start p-2 align-middle mt-2">
-      <span class="text-xl font-bold text-red-700">${{ item().price }}</span>
+      <span class="text-xl font-bold text-red-700"
+        >${{ item().price | currency : "USD" : "symbol" : "1.2-2" }}</span
+      >
     </div>
     }
 

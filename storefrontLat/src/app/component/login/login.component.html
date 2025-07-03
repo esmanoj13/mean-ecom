@@ -1,35 +1,38 @@
-<!-- Header with logo -->
-<div class="flex justify-center items-center py-6 bg-white shadow">
+<!-- Header -->
+<header class="flex justify-center items-center py-6 bg-white shadow-sm">
   <a routerLink="/">
-    <img src="images/logo.webp" alt="logo" class="w-40 h-auto" />
+    <img src="images/logo.webp" alt="logo" class="w-32 h-auto" />
   </a>
-</div>
-<!-- Login Card -->
-<div
-  class="flex justify-center items-center min-h-[80vh] bg-gradient-to-br from-blue-50 to-purple-100 px-4"
+</header>
+
+<!-- Login Form Container -->
+<section
+  class="min-h-[90vh] flex items-center justify-center bg-gradient-to-br from-indigo-50 to-purple-100 px-4"
 >
   <div
-    class="backdrop-blur-xl bg-white/70 p-8 rounded-2xl shadow-2xl w-full max-w-md border border-gray-200"
+    class="bg-white/90 backdrop-blur-xl shadow-xl border border-gray-200 p-8 rounded-2xl w-full max-w-md"
   >
-    <!-- Error Message -->
-    @if (errorMessage) {
-    <mat-error class="text-red-600 mb-4 block text-sm text-center">
-      {{ errorMessage }}
-    </mat-error>
-    }
-
     <!-- Title -->
-    <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">
-      Welcome Back
+    <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">
+      Welcome Back 👋
     </h2>
 
-    <!-- Login Form -->
+    <!-- Global Error -->
+    @if (errorMessage; as error) {
+    <div
+      class="bg-red-100 border border-red-300 text-red-700 text-sm px-4 py-2 rounded-md mb-4 text-center"
+    >
+      {{ error }}
+    </div>
+    }
+
+    <!-- Form -->
     <form
       [formGroup]="loginForm"
       (ngSubmit)="addLogin($event)"
       class="space-y-5"
     >
-      <!-- Email -->
+      <!-- Email Field -->
       <mat-form-field appearance="outline" class="w-full">
         <mat-label>Email</mat-label>
         <mat-icon matPrefix>mail</mat-icon>
@@ -39,15 +42,15 @@
           placeholder="Enter your email"
           formControlName="email"
         />
-        @if (formValidation['email'].touched) { @if
-        (formValidation['email'].errors?.['required']) {
+        @if (formValidation['email'].touched &&
+        formValidation['email'].hasError('required')) {
         <mat-error>Email is required.</mat-error>
-        } @if (formValidation['email'].errors?.['email']) {
-        <mat-error>Please enter a valid email.</mat-error>
-        } }
+        } @if (formValidation['email'].hasError('email')) {
+        <mat-error>Enter a valid email.</mat-error>
+        }
       </mat-form-field>
 
-      <!-- Password -->
+      <!-- Password Field -->
       <mat-form-field appearance="outline" class="w-full">
         <mat-label>Password</mat-label>
         <mat-icon matPrefix>lock</mat-icon>
@@ -57,39 +60,39 @@
           placeholder="Enter your password"
           formControlName="password"
         />
-        @if (formValidation['password'].touched) { @if
-        (formValidation['password'].errors?.['required']) {
+        @if (formValidation['password'].touched &&
+        formValidation['password'].hasError('required')) {
         <mat-error>Password is required.</mat-error>
-        } @if (formValidation['password'].errors?.['minlength']) {
+        } @if (formValidation['password'].hasError('minlength')) {
         <mat-error>Min 8 characters required.</mat-error>
-        } @if (formValidation['password'].errors?.['pattern']) {
-        <mat-error>Must include an uppercase and special character.</mat-error>
-        } }
+        } @if (formValidation['password'].hasError('pattern')) {
+        <mat-error>Include uppercase & special character.</mat-error>
+        }
       </mat-form-field>
 
       <!-- Forgot Password -->
       <div class="text-right">
         <button
           type="button"
-          (click)="forgotPassword()"
           class="text-sm text-blue-600 hover:underline"
+          (click)="forgotPassword()"
         >
           Forgot Password?
         </button>
       </div>
 
-      <!-- Submit Button -->
+      <!-- Login Button -->
       <button
-        mat-raised-button
+        mat-flat-button
         color="primary"
-        class="w-full py-2 font-semibold text-white tracking-wide shadow-md hover:shadow-lg transition"
         type="submit"
+        class="w-full py-2 font-semibold text-white rounded-md shadow hover:shadow-lg"
       >
         Login
       </button>
 
       <!-- Register Link -->
-      <div class="text-center text-sm text-gray-600 mt-2">
+      <div class="text-center text-sm text-gray-600">
         Don't have an account?
         <button
           type="button"
@@ -101,4 +104,4 @@
       </div>
     </form>
   </div>
-</div>
+</section>

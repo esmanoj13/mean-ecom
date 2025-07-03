@@ -22,4 +22,7 @@ export class OrderService {
   getAllOrders() {
     return this.http.get(`${this.$apiURL}/order/allorders`);
   }
+  changeOrderStatus(status: string, id: string) {
+    return this.http.put(`${this.$apiURL}/order/status`, { status, id });
+  }
 }

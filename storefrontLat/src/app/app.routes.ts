@@ -26,6 +26,7 @@ import { ForgotPasswordComponent } from './component/forgot-password/forgot-pass
 import { AllOrdersComponent } from './page/all-orders/all-orders.component';
 import { OrderSuccessComponent } from './page/order-success/order-success.component';
 import { OrdersComponent } from './page/orders/orders.component';
+import { OrderDetailComponent } from './page/order-detail/order-detail.component';
 
 export const routes: Routes = [
   {
@@ -156,6 +157,11 @@ export const routes: Routes = [
         path: 'admin/coupons',
         component: CouponsComponent,
         canActivate: [adminGuard],
+      },
+      {
+        path: 'order/:id',
+        component: OrderDetailComponent,
+        canActivate: [authGuard],
       },
     ],
   },

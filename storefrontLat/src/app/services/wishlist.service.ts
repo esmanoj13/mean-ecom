@@ -1,17 +1,23 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, inject, signal, computed } from '@angular/core';
+import { Injectable, inject, signal, PLATFORM_ID } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Product } from '../types/data-types';
-
+import { isPlatformBrowser } from '@angular/common';
 @Injectable({
   providedIn: 'root',
 })
 export class WishlistService {
   constructor() {}
+  private platformId = inject(PLATFORM_ID);
   http = inject(HttpClient);
   private $apiURL = environment.API_URL;
   public wishlistSignal = signal<Product[]>([]);
   loadWishlist(): void {
+    // This is used to check for universal angular,
+    // Angular provides a way to check if code is running in the browser or server using isPlatformBrowser.
+    if (!isPlatformBrowser(this.platformId)) return;
+    const token = localStorage.getItem('token');
+    if (!token) return;
     this.http
       .get<Product[]>(`${this.$apiURL}/customer/wishlist`)
       .subscribe((items) => {
