@@ -43,4 +43,24 @@ const deleteOrder = async (req, res) => {
         res.status(500).json({ message: "Failed to delete order", error: err.message });
     }
 }
-export { addorder, getAllOrders, getcustomerorders, deleteOrder }
+const changeOrderStatus = async (req, res) => {
+    try {
+        const { id: orderId, status } = req.body;
+        if (!orderId || !status) {
+            return res.status(400).json({ message: "Order ID and status are required." });
+        }
+        const allowedStatuses = ['pending', 'confirmed', 'shipped', 'delivered', 'cancelled'];
+        if (!allowedStatuses.includes(status)) {
+            return res.status(400).json({ message: "Invalid status value." });
+        }
+        const order = await Order.findByIdAndUpdate(orderId, { status }, { new: true });
+        if (!order) {
+            return res.status(404).json({ message: "Order not found" });
+        }
+        res.status(200).json(order);
+    } catch (err) {
+        res.status(500).json({ message: "Failed to update order status", error: err.message });
+    }
+}
+
+export { addorder, getAllOrders, getcustomerorders, deleteOrder, changeOrderStatus }

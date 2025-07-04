@@ -2,10 +2,17 @@
   <h2 class="text-3xl font-bold">{{ title() }}</h2>
 </div>
 
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 p-4">
-  @for(item of product(); track item._id){
-  <div>
-    <app-product-card [item]="item"></app-product-card>
-  </div>
+@if (product().length > 0) {
+<owl-carousel-o [options]="carouselOptions" class="my-6">
+  @for (item of product(); track item._id) {
+  <ng-template carouselSlide>
+    <!-- Each card with spacing -->
+    <div class="w-[320px] mx-3">
+      <app-product-card [item]="item"></app-product-card>
+    </div>
+  </ng-template>
   }
-</div>
+</owl-carousel-o>
+} @else {
+<div class="text-gray-500 text-center py-10">No products found.</div>
+}
