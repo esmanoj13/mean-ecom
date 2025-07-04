@@ -1,10 +1,11 @@
 import Brand from "../db/brand.js"
 const getbrands = async (req, res) => {
     try {
-        const brands = await Brand.find();
+        const brands = await Brand.find().populate("categoryId");
         if (!brands) {
             res.status(404).json({ error: "Brand not found." })
         }
+        console.log(brands);
         res.status(200).json(brands);
     } catch (err) {
         console.error("Error fetching categories:", err);
@@ -15,10 +16,9 @@ const getbrands = async (req, res) => {
 }
 
 const addBrands = async (req, res) => {
-    console.log("addbrands");
     try {
-        const { name } = req.body;
-        const brand = new Brand({ name });
+        const { name, categoryId } = req.body;
+        const brand = new Brand({ name, categoryId });
         await brand.save();
         res.status(201).send(brand.toObject());
     } catch (err) {
@@ -85,5 +85,6 @@ const getBrand = async (req, res) => {
         })
     }
 }
+
 
 export { getbrands, addBrands, deleteBrand, updateBrand, getBrand }

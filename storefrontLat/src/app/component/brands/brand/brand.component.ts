@@ -37,7 +37,7 @@ export class BrandComponent implements AfterViewInit, OnInit {
   }
   brandService = inject(BrandService);
   router = inject(Router);
-  displayedColumns: string[] = ['id', 'name', 'action'];
+  displayedColumns: string[] = ['id', 'catname', 'name', 'action'];
   dataSource: MatTableDataSource<any>;
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;

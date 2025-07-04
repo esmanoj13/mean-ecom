@@ -6,8 +6,18 @@
   }
 
   <form class="flex flex-col example-form shadow-sm">
-    <div class="flex flex-wrap">
-      <div class="w-full">
+    <div class="flex flex-wrap justify-between items-center">
+      <div class="w-1/2">
+        <mat-form-field>
+          <mat-label>Categories</mat-label>
+          <mat-select [(ngModel)]="selectedCategory" name="selectedCategory">
+            @for (category of categories; track $index) {
+            <mat-option [value]="category._id">{{ category.name }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="w-1/2">
         <mat-form-field class="example-full-width">
           <mat-label>Brand</mat-label>
           <input

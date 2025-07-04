@@ -14,9 +14,10 @@ export class BrandService {
     return this.http.get<Brand[]>(`${this.$apiURL}/brand`);
   }
 
-  addBrand(name: string) {
+  addBrand(name: string, selectedCategory: string) {
     return this.http.post<Brand>(`${this.$apiURL}/brand`, {
       name: name,
+      categoryId: selectedCategory,
     });
   }
   deleteBrands(id: string) {
@@ -27,9 +28,10 @@ export class BrandService {
     return this.http.get<Brand>(`${this.$apiURL}/brand/${id}`);
   }
 
-  updateBrands(id: string, name: string) {
+  updateBrands(id: string, name: string, selectedCategory: string) {
     return this.http.put<Brand>(`${this.$apiURL}/brand/${id}`, {
       name: name,
+      categoryId: selectedCategory,
     });
   }
 }
