@@ -40,7 +40,7 @@ export class SearchComponent implements OnInit {
   brand: Brand[] = [];
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe((params) => {
-      this.searchTerm = params['search'] || '';
+      this.searchTerm = params['q'] || '';
       this.getsearchProducts();
     });
 

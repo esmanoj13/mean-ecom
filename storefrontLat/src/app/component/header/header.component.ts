@@ -17,6 +17,7 @@ import { BrandService } from '../../services/brand.service';
 import { MatIcon } from '@angular/material/icon';
 import { WishlistService } from '../../services/wishlist.service';
 import { CartService } from '../../services/cart.service';
+import { match } from 'assert';
 
 @Component({
   selector: 'app-header',
@@ -40,7 +41,7 @@ export class HeaderComponent implements OnInit {
   cartService = inject(CartService);
   productService = inject(AllproductsService);
   ecommCompany: string = 'EasyMart';
-  category: Category[] = [];
+  categorys: Category[] = [];
   brand: Brand[] = [];
   products: Product[] = [];
   @ViewChild('searchBox') searchBox!: ElementRef;
@@ -59,7 +60,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.categoryService.getcategories().subscribe((data) => {
-      this.category = data;
+      this.categorys = data;
     });
 
     this.brandService.getAllBrands().subscribe((data) => {
@@ -81,23 +82,40 @@ export class HeaderComponent implements OnInit {
   wishlistCount = computed(() => this.wishlistService.wishlistItems().length);
   cartItemCount = computed(() => this.cartService.cartItems().length);
 
-  searchitem() {
-    let searchValue = this.searchTerm.trim();
+  searchitemIcon(): void {
+    const searchValue = this.searchTerm.trim();
     if (!searchValue) return;
     this.router.navigate(['/search'], {
-      queryParams: { search: searchValue },
+      queryParams: { q: searchValue, categoryId: null, brandId: null, page: 1 },
       queryParamsHandling: 'merge',
     });
   }
   searchitems() {
+    const term = this.searchTerm.trim().toLowerCase();
     console.log('Searching for:', this.searchTerm);
-    if (!this.searchTerm.trim()) {
+    if (!term) {
       this.products = [];
       this.showDropdown = false;
       return;
     }
+    const matchCategory = this.categorys.find((b) =>
+      b.name.toLowerCase().includes(term)
+    );
+    const matchBrand = this.brand.find((b) =>
+      b.name.toLowerCase().includes(term)
+    );
+    const categoryId = matchCategory ? matchCategory._id : this.categoryId;
+    const brandId = matchBrand ? matchBrand._id : this.brandId;
     this.productService
-      .getSearchProducts(this.searchTerm, this.categoryId, '', '', 1, 1, 5)
+      .getSearchProducts(
+        this.searchTerm,
+        categoryId || '',
+        brandId || '',
+        '',
+        1,
+        1,
+        5
+      )
       .subscribe({
         next: (data: Product[]) => {
           this.products = data;
@@ -114,7 +132,7 @@ export class HeaderComponent implements OnInit {
   searchCategory(id: string) {
     this.searchTerm = '';
     this.router.navigate(['/product'], {
-      queryParams: { categoryId: id, search: null },
+      queryParams: { categoryId: id, brandId: null, searchTerm: null },
       queryParamsHandling: 'merge',
     });
   }
@@ -122,7 +140,7 @@ export class HeaderComponent implements OnInit {
   searchBrand(id: string) {
     this.searchTerm = '';
     this.router.navigate(['/product'], {
-      queryParams: { brandId: id, search: null },
+      queryParams: { brandId: id, searchTerm: null, categoryId: null },
       queryParamsHandling: 'merge',
     });
   }

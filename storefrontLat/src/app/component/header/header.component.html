@@ -12,7 +12,7 @@
         (keyup)="searchitems()"
         [(ngModel)]="searchTerm"
       />
-      <button type="button" (click)="searchitem()">🔍</button>
+      <button type="button" (click)="searchitemIcon()">🔍</button>
       @if(products.length > 0 && searchTerm.length > 0 && showDropdown){
       <div
         class="SearchItem absolute top-12 left-0 bg-white shadow-lg z-10 w-full max-h-60 overflow-y-auto rounded-b-lg"
@@ -103,9 +103,12 @@
   </div>
   <div class="categories">
     <ul>
-      @for(item of category;track $index){
-      <li (click)="searchCategory(item._id!)" class="cursor-pointer category">
-        <a>{{ item.name }}</a>
+      @for(category of categorys;track $index){
+      <li
+        (click)="searchCategory(category._id!)"
+        class="cursor-pointer category"
+      >
+        <a>{{ category.name }}</a>
       </li>
       }
     </ul>

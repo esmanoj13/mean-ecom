@@ -1,14 +1,14 @@
-<div class="flex flex-col justify-center items-center w-full main">
+<div class="flex flex-col justify-center items-center w-full main h-screen">
   @if(isEdit){
-  <h2 class="text-lg">Update Brand</h2>
+  <h2 class="text-2xl font-semibold mb-3">Update Brand</h2>
   } @else{
   <h2 class="text-3xl pb-2">Add new Brand</h2>
   }
 
   <form class="flex flex-col example-form shadow-sm">
     <div class="flex flex-wrap justify-between items-center">
-      <div class="w-1/2">
-        <mat-form-field>
+      <div class="w-full">
+        <mat-form-field class="w-full">
           <mat-label>Categories</mat-label>
           <mat-select [(ngModel)]="selectedCategory" name="selectedCategory">
             @for (category of categories; track $index) {
@@ -17,8 +17,8 @@
           </mat-select>
         </mat-form-field>
       </div>
-      <div class="w-1/2">
-        <mat-form-field class="example-full-width">
+      <div class="w-full">
+        <mat-form-field class="w-full">
           <mat-label>Brand</mat-label>
           <input
             type="text"

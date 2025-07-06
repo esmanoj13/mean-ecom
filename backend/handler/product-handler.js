@@ -29,24 +29,9 @@ const addProduct = async (req, res) => {
     }
 }
 
-//This is used for the  getting all the product
-// async function addproduct(model) {
-//     let product = new Product({
-//             name=model.name,
-//             shortdescription=model.shortdescription,
-//             description= model.description,
-//             price= model.price,
-//             discount= model.discount,
-//             category= model.category,
-//         ...model,
-//     });
-//     await product.save();
-//     return product.toObject();
-// }
-
 const getProducts = async (req, res) => {
     try {
-        const products = await Product.find().populate("brandId").populate("categoryId");
+        const products = await Product.find().populate("brandId").populate("categoryId").lean;
         if (!products) {
             return res.status(404).json({ error: "product not found" })
         }
@@ -56,7 +41,6 @@ const getProducts = async (req, res) => {
         return res.status(500).json({
             error: "An error occurred to get the product"
         })
-
     }
 }
 const getProduct = async (req, res) => {
@@ -71,8 +55,7 @@ const getProduct = async (req, res) => {
         console.error("error Fetching product:", err);
         return res.status(500).json({
             error: "An error occurred to get the product"
-        })
-
+        });
     }
 }
 const updateProduct = async (req, res) => {
@@ -163,10 +146,10 @@ const getFeaturedProducts = async (req, res) => {
         })
     }
 }
-
+// this function is used for searching products by name, category, and brand
+// It supports pagination, sorting, and filtering by category and brand.    
 const getProductList = async (req, res) => {
     try {
-        let queryParameter = {};
         const {
             searchTerm = '',
             categoryId,
@@ -176,60 +159,56 @@ const getProductList = async (req, res) => {
             page = 1,
             pageSize = 10
         } = req.query;
-
-
-
+        let filter = [];
+        // 1.If categoryId or brandId is provided, add them to the 
+        // filter to narrow down the search results.
+        // 2. This line searches the Category collection to see if the searchTerm typed by 
+        // the user matches any category name, case-insensitively.
         if (searchTerm) {
-            queryParameter.$or = [
-                { name: { $regex: searchTerm, $options: "i" } },
-                { shortDescription: { $regex: searchTerm, $options: "i" } },
-            ];
+            // Create a case-insensitive regex to search for the term in product name, description, category, and brand.
+            // This allows users to search for products by name, short description, category, or brand.
+            const $regex = new RegExp(searchTerm, 'i');
+            const matchedCategories = await Category.find({ name: $regex }, '_id');
+            const matchedBrands = await Brand.find({ name: $regex }, '_id');
+            const categoryIds = matchedCategories.map(c => c._id);
+            const brandIds = matchedBrands.map(b => b._id);
+            filter.push({
+                $or: [
+                    { name: $regex },
+                    { shortDescription: $regex },
+                    // $in is a MongoDB query operator used to match values that are inside a given array.
+                    { categoryId: { $in: categoryIds } },
+                    { brandId: { $in: brandIds } }
+                ]
+            });
         }
-        if (categoryId) queryParameter.categoryId = categoryId;
-        if (brandId) queryParameter.brandId = brandId;
+        if (categoryId) filter.push({ categoryId });
+        if (brandId) filter.push({ brandId });
+        // You're allowing users to search across multiple fields (category, brand, product name, description),
+        // and you want to show all matching results, not just those that match all filters.
 
+        const query = filter.length > 0 ? { $and: filter } : {};
         const validSortFields = ["price", "name", "createdAt"];
         const sortField = validSortFields.includes(sortBy) ? sortBy : "price";
         const sortDirection = Number(sortOrder) === -1 ? -1 : 1;
         const pageNumber = Math.max(parseInt(page, 10) || 1, 1);
         const pageSizeNumber = Math.max(parseInt(pageSize, 10) || 10, 1);
-
         const skip = (pageNumber - 1) * pageSizeNumber;
         const limit = pageSizeNumber;
 
-        const products = await Product.find(queryParameter)
+        const products = await Product.find(query)
             .sort({ [sortField]: sortDirection })
             .skip(skip)
             .limit(limit)
             .populate("categoryId")
             .populate("brandId");
 
-        return res.status(200).json(
+        res.status(200).json(
             products
         );
-
-        if (!products.length) {
-            return res.status(404).json({ error: "No products found" });
-        }
-
-
-
     } catch (err) {
         console.error("Error finding products:", err);
         return res.status(500).json({ error: "Error finding products" });
     }
 };
-
-// const getProductDisplay = async (req, res) => {
-//     try {
-//         let id = req.params.id;
-//         let product = await Product.findById(id);
-//         return res.status(200).json(product);
-//     } catch { err } {
-//         console.error("Error finding product:", err);
-//         return res.status(500).json({ error: "Error finding product" });
-//     }
-
-// };
-
 export { addProduct, getProducts, getProduct, updateProduct, deleteProduct, getFeaturedProducts, getProductList, getNewProducts }

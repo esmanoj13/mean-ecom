@@ -11,11 +11,9 @@ export class AllproductsService {
   private $apiURL = environment.API_URL;
   constructor() {}
   getNewProducts() {
-    // console.log('new token token:');
     return this.http.get<Product[]>(`${this.$apiURL}/product/new-products`);
   }
-  getFeaturedProducts() {
-    // console.log('featured token:');
+  getFeaturedProducts() { 
     return this.http.get<Product[]>(
       `${this.$apiURL}/product/featured-products`
     );

@@ -94,8 +94,9 @@ export class ProductListComponent implements OnInit {
       },
     });
   }
-
-  onCategoryChange(categoryId: string) {
+  // Update category filter in the URL and reset the search input
+  onCategoryChange(categoryId: string): void {
+    if (!categoryId) return;
     this.searchTerm = '';
     this.router.navigate([], {
       queryParams: { categoryId },
@@ -105,7 +106,9 @@ export class ProductListComponent implements OnInit {
   }
 
   /** Updates query params when brand changes */
-  onBrandChange(brandId: string) {
+  onBrandChange(brandId: string): void {
+    if (!brandId) return;
+    this.searchTerm = '';
     this.router.navigate([], {
       queryParams: { brandId },
       queryParamsHandling: 'merge',

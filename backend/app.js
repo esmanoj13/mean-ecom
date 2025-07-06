@@ -13,7 +13,6 @@ const port = process.env.PORT || 3000;
 const apiUrl = process.env.API_URL;
 
 app.use(express.json());
-app.use(cors());
 
 // const categoryRoutes = require("./route/category");
 // const brandRoutes = require("./route/brand");
