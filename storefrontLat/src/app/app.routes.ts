@@ -144,14 +144,17 @@ export const routes: Routes = [
       {
         path: 'order-success',
         component: OrderSuccessComponent,
+        canActivate: [authGuard],
       },
       {
         path: 'orders',
         component: OrdersComponent,
+        canActivate: [authGuard],
       },
       {
         path: 'allorders',
         component: AllOrdersComponent,
+        canActivate: [adminGuard],
       },
       {
         path: 'admin/coupons',
