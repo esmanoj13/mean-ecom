@@ -67,13 +67,13 @@ const updateBrand = async (req, res) => {
     }
 }
 
-const getBrand = async (req, res) => {
+const editBrand = async (req, res) => {
     try {
         let model = req.body;
         let id = req.params.id;
         const brand = await Brand.findById({
             _id: id
-        }, model);
+        }, model).populate("categoryId");;
         if (!brand) {
             res.status(404).json({ error: "Brand not found." })
         }
@@ -87,4 +87,4 @@ const getBrand = async (req, res) => {
 }
 
 
-export { getbrands, addBrands, deleteBrand, updateBrand, getBrand }
+export { getbrands, addBrands, deleteBrand, updateBrand, editBrand }

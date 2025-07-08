@@ -23,7 +23,7 @@ export class BrandService {
   deleteBrands(id: string) {
     return this.http.delete<Brand>(`${this.$apiURL}/brand/${id}`);
   }
-  editBrand(id: string) {
+  editBrand(id: string,) {
     // console.log(id);
     return this.http.get<Brand>(`${this.$apiURL}/brand/${id}`);
   }

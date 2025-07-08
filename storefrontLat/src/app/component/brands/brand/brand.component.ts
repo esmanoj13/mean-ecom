@@ -84,11 +84,14 @@ export class BrandComponent implements AfterViewInit, OnInit {
       },
     });
   }
-  updateBrand(id: string) {
+  editBrand(id: string) {
     this.brandService.editBrand(id).subscribe({
       next: (data: any) => {
-        console.log('update brand:', data._id);
-        this.router.navigateByUrl(`admin/brand/${data._id}`);
+         // Navigate to the brand form with the brand data,
+        // this allows us to pre-fill the form
+        this.router.navigate([`admin/brand/${data._id}`], {
+          state: { brand: data },
+        });
       },
       error(err: any) {
         console.error('Error updating brand:', err);

@@ -39,11 +39,7 @@
 
         <td mat-cell *matCellDef="let row">
           <div class="example-button-row">
-            <button
-              mat-raised-button
-              bg-green-500
-              (click)="updateBrand(row._id)"
-            >
+            <button mat-raised-button bg-green-500 (click)="editBrand(row._id)">
               <mat-icon class="mr-1">edit</mat-icon>
             </button>
             <button mat-raised-button (click)="deleteBrands(row._id)">
