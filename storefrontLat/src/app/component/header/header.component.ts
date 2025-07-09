@@ -151,5 +151,7 @@ export class HeaderComponent implements OnInit {
   logout() {
     this.authService.logout();
     this.router.navigateByUrl('/login');
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
   }
 }

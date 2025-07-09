@@ -35,7 +35,14 @@ export class AuthService {
   private setAuthData(token: string, user: any) {
     if (typeof window !== 'undefined' && window.localStorage) {
       localStorage.setItem('token', token);
-      localStorage.setItem('user', JSON.stringify(user));
+      localStorage.setItem(
+        'user',
+        JSON.stringify({
+          name: user.name,
+          email: user.email,
+          isAdmin: user.isAdmin,
+          id: user._id,})
+      );
       // Reload cart and wishlist after setting auth data
       if (this.cartService && this.wishlistService) {
         this.cartService.loadcart();

@@ -1,6 +1,10 @@
-import { HttpInterceptorFn } from '@angular/common/http';
-
+import { HttpInterceptorFn, HttpErrorResponse } from '@angular/common/http';
+import { inject } from '@angular/core';
+import { Router } from '@angular/router';
+import { catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 export const tokenHTTPInterceptor: HttpInterceptorFn = (req, next) => {
+  const router = inject(Router);
   // Skip authentication for public endpoints
   if (
     req.url.includes('/auth/login') ||
@@ -16,21 +20,25 @@ export const tokenHTTPInterceptor: HttpInterceptorFn = (req, next) => {
     try {
       token = localStorage.getItem('token');
       if (token) {
-        const modifiedReq = req.clone({
+        req = req.clone({
           setHeaders: {
             Authorization: `Bearer ${token}`,
           },
         });
-        return next(modifiedReq);
       }
     } catch (error) {
       console.error('Error accessing localStorage:', error);
     }
   }
-
-  // Only log token missing for protected endpoints
-  if (req.url.includes('/customer/') || req.url.includes('/admin/')) {
-    console.warn('Protected endpoint accessed without authentication token');
-  }
-  return next(req);
+  // If token is not present, log a warning and redirect to login
+  return next(req).pipe(
+    catchError((error: HttpErrorResponse) => {
+      if (error.status === 401 || error.status === 403) {
+        console.error('Unauthorized request:', error);
+        localStorage.removeItem('token'); // Clear token on unauthorized access
+        router.navigate(['/auth/login']); // Redirect to login
+      }
+      return throwError(() => error);
+    })
+  );
 };
