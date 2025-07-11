@@ -11,6 +11,9 @@ export class WishlistService {
   private platformId = inject(PLATFORM_ID);
   http = inject(HttpClient);
   private $apiURL = environment.API_URL;
+  // Using signal to manage wishlist state
+  // This allows us to reactively update the wishlist in the UI
+  // when items are added or removed.
   public wishlistSignal = signal<Product[]>([]);
   loadWishlist(): void {
     // This is used to check for universal angular,
@@ -24,9 +27,16 @@ export class WishlistService {
         this.wishlistSignal.set(items);
       });
   }
+  // Check if a product is in the wishlist
+  // This method checks if a product with the given ID is already in the wishlist.
+  // It returns true if the product is found, otherwise false.
+  // This is useful for determining whether to show the "Add to Wishlist" or "Remove from Wishlist" button.
   isInWishlist(id: string): boolean {
     return this.wishlistSignal().some((item) => item && item._id === id);
   }
+  // Getter to access the wishlist items
+  // This getter provides a read-only view of the wishlist items.
+  // It allows components to subscribe to changes in the wishlist without directly modifying it.
   get wishlistItems() {
     return this.wishlistSignal.asReadonly();
   }

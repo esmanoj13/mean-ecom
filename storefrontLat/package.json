@@ -1,12 +1,16 @@
 {
   "name": "storefront-lat",
   "version": "0.0.0",
+  "type": "module",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "type": "module",
+    "build:ssr": "ng build && ng run storefrontLat:server",
+    "serve:ssr": "node dist/server/server.js"
   },
   "private": true,
   "dependencies": {
@@ -22,7 +26,9 @@
     "@angular/platform-server": "^18.2.13",
     "@angular/router": "^18.2.0",
     "@angular/ssr": "^18.2.11",
-    "ngx-owl-carousel-o": "^18.0.0",
+    "@glidejs/glide": "^3.7.1",
+    "ngx-glide": "^16.0.0",
+    "ngx-owl-carousel-o": "^18.0.1",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.10"
   },

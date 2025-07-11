@@ -1,4 +1,4 @@
 export const environment = {
-  production: false,
+  production: true,
   API_URL: 'https://ecom-backend-repo.onrender.com',
 };

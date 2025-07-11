@@ -1,14 +1,15 @@
 {
   "extends": "./tsconfig.app.json",
   "compilerOptions": {
-    "target": "ES2015",
-    "module": "commonjs",
-    "moduleResolution": "node",
+    "target": "ES2022", // ✅ required for import.meta.url
+    "module": "NodeNext", // ✅ enables import.meta.url
+    "moduleResolution": "NodeNext", // ✅ needed for ES modules
     "noImplicitAny": true,
     "skipLibCheck": true,
     "strict": true,
-    "types": ["node"]
+    "types": ["node"],
+    "outDir": "dist/server"
   },
-  "files": ["src/main.server.ts"],
-  "include": ["src/**/*.ts"]
+  "files": ["server.ts", "src/main.server.ts"],
+  "include": ["src/**/*.ts", "server.ts"]
 }
